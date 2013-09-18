@@ -4,18 +4,21 @@ var fs = require("fs");
 var sys = require('sys')
 var exec = require('child_process').exec;
 
+var CONFIG = require("./config");
+
 // create repository
 runCommand("sh " + __dirname + "/bin/create-repository.sh " + process.cwd(), function () {
     runCommand("sh " + __dirname + "/bin/create-commit.sh " + process.cwd() + "/generated-repo" + " 1379443078");
 
-    var beginDate = Date.parse("2012-09-14")/1000;
-    var endDate = Date.parse("2013-09-14")/1000;
+    var beginDate = Date.parse(CONFIG.beginDate) / 1000 || Date.parse("2012-09-14") / 1000;
+    var endDate =   Date.parse(CONFIG.endDate) / 1000 || Date.parse("2013-09-14") / 1000;
 
     var commitCount = 1;
     (function makeCommit (date) {
         ++commitCount;
         runCommand("sh " + __dirname + "/bin/create-commit.sh " + process.cwd() + "/generated-repo" + " " + date, function () {
-            var commitsPerDay = Math.floor(Math.random() * 4);
+            var commitsPerDay = Math.floor(Math.random() * CONFIG.maxCommitsPerDay || 10);
+            commitCount += commitsPerDay;
             var i = 0;
 
             (function makeDayCommit () {
