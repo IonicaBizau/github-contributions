@@ -5,7 +5,7 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/IonicaBizau/contributions.git"
+    "url": "git://github.com/IonicaBizau/gh-contributions.git"
   },
   "keywords": [
     "contributions",
@@ -18,6 +18,6 @@
   "author": "Ionica Bizau <bizauionica@gmail.com>",
   "license": "BSD-2-Clause",
   "bugs": {
-    "url": "https://github.com/IonicaBizau/contributions/issues"
+    "url": "https://github.com/IonicaBizau/gh-contributions/issues"
   }
 }
