@@ -3,9 +3,6 @@
   "version": "0.0.0",
   "description": "A simple application that generates a repository that being added into your Github account creates a nice contributions graph.",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git://github.com/IonicaBizau/contributions.git"
@@ -15,6 +12,9 @@
     "github",
     "git"
   ],
+  "dependencies": {
+    "underscore": "*"
+  },
   "author": "Ionica Bizau <bizauionica@gmail.com>",
   "license": "BSD-2-Clause",
   "bugs": {
