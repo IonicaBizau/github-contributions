@@ -6,7 +6,7 @@ mkdir ~/gh-contributions
 echo "...entering there"
 cd ~/gh-contributions
 echo "...downloading"
-wget https://github.com/IonicaBizau/contributions/archive/master.zip
+wget https://github.com/IonicaBizau/gh-contributions/archive/master.zip
 echo "...unziping"
 unzip master.zip
 mv contributions-master/* ./
