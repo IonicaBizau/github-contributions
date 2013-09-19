@@ -44,7 +44,7 @@ $(".day").on("click", function () {
     $(this).toggleClass("active");
 }).tooltip({
     placement: "bottom"
-});;
+});
 
 function daysInMonth(month,year) {
     return new Date(year, month, 0).getDate();
