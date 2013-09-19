@@ -10,6 +10,7 @@ wget https://github.com/IonicaBizau/contributions/archive/master.zip
 echo "...unziping"
 unzip master.zip
 mv contributions-master/* ./
+npm install
 rm -rf contributions-master master.zip
 echo "Sucessfully installed. Please type: cd ~/gh-contributions"
 echo "Bye!"
