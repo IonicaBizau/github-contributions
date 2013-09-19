@@ -1,0 +1,23 @@
+@import url("../bootstrap/css/bootstrap.min.css");
+
+.day {
+    width: 10px;
+    height: 10px;
+    background: white;
+    margin: 1px;
+    display: inline;
+    float: left;
+}
+
+.gh-contributions {
+    width: 775px;
+    padding: 10px;
+    height: 120px;
+    background: lightblue;
+    position: absolute;
+    top: 15%;
+    left: 10%;
+}
+.active {
+    background: red !important;
+}
