@@ -5,43 +5,40 @@ var now = getDateTime(true);
 now.day = parseInt(now.day);
 now.month = parseInt(now.month);
 
-var $table = $("<table>");
-var $tbody = $("<tbody>");
-var dateDay = 0;
+var tmpDay = 0;
+var $week;
+for (var month = 0; month <= now.month; ++month) {
 
-for (var day = 1; day <= 7; ++day) {
+    var dateMonth = now.month + month;
+    var dateYear  = now.year - 1;
 
-    var $row = $("<tr>");
-    for (var month = 0; month < 54; ++month) {
+    if (dateMonth > 12) {
+        dateMonth = 12 - dateMonth;
+        ++dateYear;
+    }
 
-        var dateMonth = now.month + month;
-        var dateYear  = now.year - 1;
 
-        if (dateMonth > 12) {
-            dateMonth = 12 - dateMonth;
-            ++dateYear;
+    for (var day = 1; day < daysInMonth(dateYear, month); ++day) {
+        if (++tmpDay % 7 === 1) {
+            if ($week) {
+                $tmp.append($week);
+            }
+
+            $week = $("<div>").addClass("week");
         }
 
-        var $td = $("<td>");
-        ++dateDay;
-        if (dateDay > daysInMonth(dateYear)) {
-            dateDay = 1;
-        }
-
-        var dateStr = dateYear + "-" + dateMonth + "-" + dateDay;
+        var dateStr = dateYear + "-" + dateMonth + "-" + day;
         var $day = $("<div>")
                     .addClass("day")
                     .attr("data-date", dateStr)
                     .attr("title", dateStr)
                     .attr("data-unix", Date.parse(dateStr) / 1000);
-        $td.append($day);
-        $row.append($td);
+
+        $week.append($day);
     }
-    $tbody.append($row);
 }
 
-$table.append($tbody);
-$(".gh-contributions").append($table);
+$(".gh-contributions").html($tmp.html());
 
 $(".day").on("click", function () {
     $(this).toggleClass("active");
