@@ -13,7 +13,7 @@ for (var month = 0; month <= now.month; ++month) {
     var dateYear  = now.year - 1;
 
     if (dateMonth > 12) {
-        dateMonth = 12 - dateMonth;
+        dateMonth = dateMonth - 12;
         ++dateYear;
     }
 
