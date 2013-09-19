@@ -9,8 +9,8 @@ echo "...downloading"
 wget https://github.com/IonicaBizau/gh-contributions/archive/master.zip
 echo "...unziping"
 unzip master.zip
-mv contributions-master/* ./
+mv gh-contributions-master/* ./
 npm install
-rm -rf contributions-master master.zip
+rm -rf gh-contributions-master master.zip
 echo "Sucessfully installed. Please type: cd ~/gh-contributions"
 echo "Bye!"
