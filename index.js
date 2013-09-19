@@ -6,6 +6,42 @@ var exec = require('child_process').exec;
 
 var CONFIG = require("./config");
 
+if (CONFIG.dates) {
+    runCommand("sh " + __dirname + "/bin/create-repository.sh " + process.cwd(), function () {
+        console.log("Created");
+        var ID = 0;
+        (function makeCommit (date) {
+            if (!date || isNaN(date)) {
+                console.log("Date is: ", date, "Id: ", ID);
+                process.exit(1);
+                return;
+            }
+            runCommand("sh " + __dirname + "/bin/create-commit.sh " + process.cwd() + "/generated-repo" + " " + date, function () {
+                var commitsPerDay = CONFIG.commitsPerDay;
+
+                var i = 0;
+                (function makeDayCommit () {
+                    console.log(i + " < " + commitsPerDay);
+                    if (++i > commitsPerDay) {
+                        if (ID >= CONFIG.dates.length) {
+                            console.log("FINISHED");
+                            process.exit(0);
+                        }
+                        if (ID < CONFIG.dates.length) {
+                            makeCommit(CONFIG.dates[++ID]);
+                            return;
+                        }
+                    }
+
+                    runCommand("sh " + __dirname + "/bin/create-commit.sh " + process.cwd() + "/generated-repo" + " " + (date + i * 60), function () {
+                        makeDayCommit();
+                    });
+                })()
+            });
+        })(CONFIG.dates[ID]);
+    });
+    return;
+}
 // create repository
 runCommand("sh " + __dirname + "/bin/create-repository.sh " + process.cwd(), function () {
     runCommand("sh " + __dirname + "/bin/create-commit.sh " + process.cwd() + "/generated-repo" + " 1379443078");

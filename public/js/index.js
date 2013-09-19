@@ -50,7 +50,7 @@ $(".btn-generate").on("click", function () {
     var dates = [];
 
     $(".gh-contributions .day.active").each(function () {
-        dates.push($(this).attr("data-unix"));
+        dates.push(parseInt($(this).attr("data-unix")));
     });
 
     console.log(JSON.stringify(dates));
