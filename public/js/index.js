@@ -46,6 +46,16 @@ $(".day").on("click", function () {
     placement: "bottom"
 });
 
+$(".btn-generate").on("click", function () {
+    var dates = [];
+
+    $(".gh-contributions .day.active").each(function () {
+        dates.push($(this).attr("data-unix"));
+    });
+
+    console.log(JSON.stringify(dates));
+});
+
 function daysInMonth(month,year) {
     return new Date(year, month, 0).getDate();
 }
