@@ -7,6 +7,13 @@
     margin: 2px;
 }
 
+.emptyDay {
+    width: 11px;
+    height: 11px;
+    background: transparent;
+    margin: 2px;
+}
+
 .week{
     width: 10px;
     float:left;
@@ -14,7 +21,7 @@
 }
 
 .gh-contributions {
-    width: 556px;
+    width: 700px;
     padding: 10px;
     background: lightblue;
     position: absolute;

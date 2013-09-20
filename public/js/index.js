@@ -1,24 +1,47 @@
-var $year = $(".gh-contributions");
-var $tmp = $("<div>");
+function createContributionsGraph (howManyEmptyDays) {
+    var $year = $(".gh-contributions");
+    var $tmp = $("<div>");
 
-var now = getDateTime(true);
-now.day = parseInt(now.day);
-now.month = parseInt(now.month);
+    var now = getDateTime(true);
+    now.day = parseInt(now.day);
+    now.month = parseInt(now.month);
 
-var tmpDay = 0;
-var $week;
-for (var month = 0; month <= now.month; ++month) {
+    var tmpDay = 0;
+    var $week;
 
-    var dateMonth = now.month + month;
-    var dateYear  = now.year - 1;
+    var date = {
+        day: now.day,
+        month: now.month,
+        year: now.year - 1
+    };
 
-    if (dateMonth > 12) {
-        dateMonth = dateMonth - 12;
-        ++dateYear;
-    }
+    for (var dayId = 0 - howManyEmptyDays; dayId < 366; ++dayId) {
+
+        var $day = $("<div>");
+        if (dayId < 0) {
+            $day.addClass("emptyDay");
+        }
+        else {
+            date.day += 1;
+
+            if (date.day > daysInMonth (date.year, date.month)) {
+                date.day = 1;
+                ++date.month;
+                if (date.month > 12) {
+                    ++date.year;
+                    date.month = 1;
+                }
+            }
 
 
-    for (var day = 1; day < daysInMonth(dateYear, month); ++day) {
+
+            var dateStr = date.year + "-" + date.month + "-" + date.day;
+            $day.addClass("day")
+                .attr("data-date", dateStr)
+                .attr("title", dateStr)
+                .attr("data-unix", Date.parse(dateStr) / 1000);
+        }
+
         if (++tmpDay % 7 === 1) {
             if ($week) {
                 $tmp.append($week);
@@ -26,24 +49,23 @@ for (var month = 0; month <= now.month; ++month) {
 
             $week = $("<div>").addClass("week");
         }
-
-        var dateStr = dateYear + "-" + dateMonth + "-" + day;
-        var $day = $("<div>")
-                    .addClass("day")
-                    .attr("data-date", dateStr)
-                    .attr("title", dateStr)
-                    .attr("data-unix", Date.parse(dateStr) / 1000);
-
         $week.append($day);
     }
+
+    $(".gh-contributions").html($tmp.html());
+    $(".day").tooltip({
+        placement: "bottom"
+    });
+
 }
 
-$(".gh-contributions").html($tmp.html());
-
-$(".day").on("click", function () {
+$(document).on("click", ".day", function () {
     $(this).toggleClass("active");
-}).tooltip({
-    placement: "bottom"
+})
+
+var howMany = 0;
+$(".btn-add").on("click", function () {
+    createContributionsGraph(++howMany);
 });
 
 $(".btn-generate").on("click", function () {
