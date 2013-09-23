@@ -6,6 +6,11 @@ var exec = require('child_process').exec;
 var colors = require('colors'); // https://github.com/Marak/colors.js
 
 var CONFIG = require("./config");
+// TODO https://github.com/IonicaBizau/gh-contributions/issues/3
+
+CONFIG.time = {
+    hour: 10
+};
 
 if (CONFIG.coordinates) {
     var year = [];
@@ -18,7 +23,8 @@ if (CONFIG.coordinates) {
         year: Now.year - 1,
         month: Now.month - 1,
         day: Now.day,
-        cDay: Now.cDay - 1
+        cDay: Now.cDay - 1,
+        hour: CONFIG.time.hour
     };
 
     if (date.cDay) {
@@ -47,10 +53,8 @@ if (CONFIG.coordinates) {
             week = [];
         }
 
-        var dateStr = date.year + "-" + date.month + "-" + date.day;
-        console.log(" * " + dateStr);
         week.push({
-            date: (new Date(date.year, date.month, date.day).getTime() / 1000)
+            date: (new Date(date.year, date.month, date.day, date.hour).getTime() / 1000)
         });
         ++date.day;
     }
