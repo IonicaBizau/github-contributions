@@ -15,3 +15,6 @@ textarea {
 
 .active { fill: red !important; }
 .day { fill: #eeeeee; }
+.today {
+	fill: darkgray;
+}

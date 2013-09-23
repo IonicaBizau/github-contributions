@@ -27,12 +27,17 @@
 var $btnGenerate = $(".btn-generate");
 var $btnImport = $(".btn-import");
 var $ghGenerated = $(".gh-generated");
+var $days = $(".day");
 
 function getDayPoint($day) {
     return {
         x: $day.parent().index() + 1,
         y: $day.index() + 1
     };
+}
+
+function getDayAtPoint(point) {
+    return $("g").eq(point.x - 1).children(".day").eq(point.x - 1);
 }
 
 $(document).on("click", ".day", function () {
@@ -60,9 +65,8 @@ $btnImport.on("click", function () {
         dates = JSON.parse(generated);
     } catch (e) { return alert(e.message); }
 
-    var a = $(".day");
-    for (var i = 0; i < a.length; ++i ) {
-        var $day = $(a[i]);
+    for (var i = 0; i < $days.length; ++i) {
+        var $day = $($days[i]);
         var point = getDayPoint($day);
 
         for (var j = 0; j < dates.length; ++j) {
@@ -72,3 +76,73 @@ $btnImport.on("click", function () {
         }
     }
 });
+
+$(function () {
+    var dayOfWeek = new Date(Date.now()).getDay();
+    var day = new Date();
+    var $today = $("g:last > .day").eq(dayOfWeek).attr("title", getDateTime(day));
+    $today[0].classList.add("today");
+    var $prevDaysInWeek = $today.prevAll(".day");
+    $prevDaysInWeek.each(function (i, e) {
+        day = new Date();
+        day.setDate(day.getDate() - i - 1);
+        $(e).attr("title", getDateTime(day));
+    });
+    var $prevWeeks = $today.parent().prevAll("g");
+    $prevWeeks.each(function (i, e) {
+        var $daysInWeek = $(e).children(".day");
+        for (var i = $daysInWeek.length - 1; i >= 0; i--) {
+            day.setDate(day.getDate() - 1);
+            if (day.getFullYear() < new Date().getFullYear()) {
+                $daysInWeek[i].classList.add("today");
+            }
+            $daysInWeek.eq(i).attr("title", getDateTime(day));
+        }
+    });
+
+    $days.each(function(i, e) {
+        var $day = $(e);
+        var p = getDayPoint($day);
+    });
+    $days.tooltip({
+        placement: "bottom",
+        container: "body" // http://stackoverflow.com/questions/17120821/bootstrap-tooltip-not-showing-on-svg-hover
+    });
+});
+
+function padWithZero(x) {
+    return (x < 10 ? "0" : "") + x;
+}
+
+function getDateTime(date) {
+    if (!date) {
+        date = new Date();
+    }
+
+    var hour = date.getHours();
+    hour = padWithZero(hour);
+
+    var min  = date.getMinutes();
+    min = padWithZero(min);
+
+    var sec  = date.getSeconds();
+    sec = padWithZero(sec);
+
+    var year = date.getFullYear();
+
+    var month = date.getMonth() + 1;
+    month = padWithZero(month);
+
+    var day  = date.getDate();
+    day = padWithZero(day);
+
+    /*if (obj) {
+        return {
+            year: year,
+            month: parseInt(month),
+            day: parseInt(day),
+            cDay: date.getDay()
+        }
+    }*/
+    return year + "-" + month + "-" + day;
+}
