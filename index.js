@@ -17,7 +17,7 @@ if (CONFIG.coordinates) {
         year: Now.year - 1,
         month: Now.month - 1,
         day: Now.day,
-        cDay: Now.cDay + 1
+        cDay: Now.cDay - 1
     };
 
     if (date.cDay) {
@@ -55,7 +55,6 @@ if (CONFIG.coordinates) {
     }
 
     fs.writeFile("./test.json", JSON.stringify(year, null, 4));
-    return;
 
     CONFIG.dates = [];
     for (var point in CONFIG.coordinates) {
