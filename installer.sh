@@ -5,8 +5,11 @@ rm -rf ~/gh-contributions
 mkdir ~/gh-contributions
 echo "...entering there"
 cd ~/gh-contributions
+
 echo "...downloading"
-wget https://github.com/IonicaBizau/gh-contributions/archive/master.zip
+# If wget is not present, use curl.
+wget https://github.com/IonicaBizau/gh-contributions/archive/master.zip || curl -OL https://github.com/IonicaBizau/gh-contributions/archive/master.zip
+
 echo "...unziping"
 unzip master.zip
 mv gh-contributions-master/* ./
