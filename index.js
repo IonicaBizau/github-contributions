@@ -1,7 +1,7 @@
 var spawn = require('child_process').spawn;
 var _ = require('underscore');
 var fs = require("fs");
-var sys = require('sys')
+var sys = require('sys');
 var exec = require('child_process').exec;
 var colors = require('colors'); // https://github.com/Marak/colors.js
 
@@ -66,7 +66,9 @@ if (CONFIG.coordinates) {
         var p = CONFIG.coordinates[point];
         CONFIG.dates.push(year[p.x - 1][p.y - 1].date);
     }
-    console.log(CONFIG.dates);
+    for (var i = 0; i < CONFIG.dates.length; i++) {
+        console.log(new Date(CONFIG.dates[i] * 1000));
+    }
 }
 
 if (CONFIG.dates) {
