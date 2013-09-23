@@ -16,6 +16,16 @@
     "underscore": "*"
   },
   "author": "Ionica Bizau <bizauionica@gmail.com>",
+  "contributors": [
+    {
+      "name": "Ionica Bizau",
+      "email": "bizauionica@gmail.com"
+    },
+    {
+      "name": "Silviu Bogan",
+      "email": "silviubogan@gmail.com"
+    }
+  ],
   "license": "BSD-2-Clause",
   "bugs": {
     "url": "https://github.com/IonicaBizau/gh-contributions/issues"
