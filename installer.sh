@@ -1,16 +1,16 @@
 echo "Welcome to Github contributions!"
 sleep 2
-echo "Making gh-contributions on ~/ directory"
+echo "Making gh-contributions directory in ~/"
 rm -rf ~/gh-contributions
 mkdir ~/gh-contributions
-echo "...entering there"
+echo "... entering ~/gh-contributions"
 cd ~/gh-contributions
 
-echo "...downloading"
+echo "... downloading"
 # If wget is not present, use curl.
 wget https://github.com/IonicaBizau/gh-contributions/archive/master.zip || curl -OL https://github.com/IonicaBizau/gh-contributions/archive/master.zip
 
-echo "...unziping"
+echo "... unzipping"
 unzip master.zip
 mv gh-contributions-master/* ./
 npm install
