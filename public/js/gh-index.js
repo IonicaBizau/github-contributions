@@ -24,25 +24,36 @@
 //
 // $container.append($svg);
 
+var $btnGenerate = $(".btn-generate");
+var $btnImport = $(".btn-import");
+var $ghGenerated = $(".gh-generated");
+
+function getDayPoint($day) {
+    return {
+        x: $day.parent().index() + 1,
+        y: $day.index() + 1
+    };
+}
+
 $(document).on("click", ".day", function () {
     if (this.classList.contains("active")) {
         this.classList.remove("active");
     } else {
         this.classList.add("active");
     }
-})
-
-$(".btn-generate").on("click", function () {
-    var dates = [];
-    var a = $(".active");
-    for (var i = 0; i < a.length; ++i ) {
-        dates.push({x: $(a[i]).parent().index() + 1, y: $(a[i]).index() + 1});
-    }
-    $(".gh-generated").val(JSON.stringify(dates, null, 4));
 });
 
-$(".btn-import").on("click", function () {
-    var generated = $(".gh-generated").val();
+$btnGenerate.on("click", function (i, e) {
+    var dates = [];
+    var a = $(".active");
+    for (var i = 0; i < a.length; ++i) {
+        dates.push(getDayPoint($(a[i])));
+    }
+    $ghGenerated.val(JSON.stringify(dates, null, 4));
+});
+
+$btnImport.on("click", function () {
+    var generated = $ghGenerated.val();
     var dates;
 
     try {
@@ -51,14 +62,12 @@ $(".btn-import").on("click", function () {
 
     var a = $(".day");
     for (var i = 0; i < a.length; ++i ) {
-        var point = {
-            x: $(a[i]).parent().index() + 1,
-            y: $(a[i]).index() + 1
-        };
+        var $day = $(a[i]);
+        var point = getDayPoint($day);
 
         for (var j = 0; j < dates.length; ++j) {
             if (point.x === dates[j].x && point.y === dates[j].y) {
-                $(a[i]).click();
+                $day.click();
             }
         }
     }
