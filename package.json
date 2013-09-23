@@ -13,7 +13,8 @@
     "git"
   ],
   "dependencies": {
-    "underscore": "*"
+    "underscore": "*",
+    "colors": "*"
   },
   "author": "Ionica Bizau <bizauionica@gmail.com>",
   "contributors": [

@@ -3,6 +3,7 @@ var _ = require('underscore');
 var fs = require("fs");
 var sys = require('sys')
 var exec = require('child_process').exec;
+var colors = require('colors'); // https://github.com/Marak/colors.js
 
 var CONFIG = require("./config");
 
@@ -139,17 +140,17 @@ runCommand("sh " + __dirname + "/bin/create-repository.sh " + process.cwd(), fun
 
 function runCommand (command, callback) {
 
-    console.log("> " + command);
+    console.log("> " + command.bold);
 
     // executes `pwd`
     var child = exec(command, function (error, stdout, stderr) {
         sys.print('stdout: ' + stdout);
-        sys.print('stderr: ' + stderr);
+        sys.print('stderr: ' + stderr.red);
         if (error !== null) {
-            console.log('exec error: ' + error);
+            console.log('exec error: '.red.bold + error.bold);
         }
     }).on("close", function (code) {
-        console.log("Close: " + code);
+        console.log("Close: ".bold + code);
         callback ? callback() : "";
     });
 }
