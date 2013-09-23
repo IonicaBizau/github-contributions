@@ -33,8 +33,6 @@ function createContributionsGraph (howManyEmptyDays) {
                 }
             }
 
-
-
             var dateStr = date.year + "-" + date.month + "-" + date.day;
             $day.addClass("day")
                 .attr("data-date", dateStr)
