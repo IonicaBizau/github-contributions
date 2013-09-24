@@ -100,10 +100,6 @@ $(function () {
         }
     });
 
-    $days.each(function(i, e) {
-        var $day = $(e);
-        var p = getDayPoint($day);
-    });
     $days.tooltip({
         placement: "bottom",
         container: "body" // http://stackoverflow.com/questions/17120821/bootstrap-tooltip-not-showing-on-svg-hover
@@ -119,15 +115,6 @@ function getDateTime(date) {
         date = new Date();
     }
 
-    var hour = date.getHours();
-    hour = padWithZero(hour);
-
-    var min  = date.getMinutes();
-    min = padWithZero(min);
-
-    var sec  = date.getSeconds();
-    sec = padWithZero(sec);
-
     var year = date.getFullYear();
 
     var month = date.getMonth() + 1;
@@ -136,13 +123,5 @@ function getDateTime(date) {
     var day  = date.getDate();
     day = padWithZero(day);
 
-    /*if (obj) {
-        return {
-            year: year,
-            month: parseInt(month),
-            day: parseInt(day),
-            cDay: date.getDay()
-        }
-    }*/
     return year + "-" + month + "-" + day;
 }
