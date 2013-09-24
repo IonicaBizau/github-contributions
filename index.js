@@ -34,16 +34,9 @@ if (CONFIG.coordinates) {
         }
     }
 
+    var dateObj = new Date(date.year, date.month, date.day, date.hour);
+
     for (var i = 0; i < 366; ++i) {
-        // console.log("> Date: ", date, "DAYS IN MONTH: ", new Date(date.year, date.month, 0).getDate());
-        if (date.day > new Date(date.year, date.month, 0).getDate()) {
-            date.day = 1;
-            ++date.month;
-            if (date.month > 12) {
-                date.month = 1;
-                ++date.year;
-            }
-        }
 
         if (week && week.length === 7) {
             year.push(week);
@@ -53,10 +46,18 @@ if (CONFIG.coordinates) {
             week = [];
         }
 
+
+        var unixStamp = dateObj.getTime() / 1000;
+
+        if (unixStamp === 1349074800) {
+            console.log(date);
+        }
+
         week.push({
-            date: (new Date(date.year, date.month, date.day, date.hour).getTime() / 1000)
+            date: unixStamp
         });
-        ++date.day;
+
+        dateObj.setDate(dateObj.getDate() + 1);
     }
 
     fs.writeFile("./test.json", JSON.stringify(year, null, 4));
@@ -67,6 +68,7 @@ if (CONFIG.coordinates) {
         CONFIG.dates.push(year[p.x - 1][p.y - 1].date);
     }
     console.log(CONFIG.dates);
+    return;
 }
 
 if (CONFIG.dates) {
