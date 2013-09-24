@@ -5,12 +5,18 @@ var sys = require('sys');
 var exec = require('child_process').exec;
 var colors = require('colors'); // https://github.com/Marak/colors.js
 
-var CONFIG = require("./config");
-// TODO https://github.com/IonicaBizau/gh-contributions/issues/3
+var CONFIG;
+if (process.argv.length <= 2) {
+    CONFIG = require("./config");
+} else {
+    CONFIG = require("./" + process.argv[2]);
+}
 
-CONFIG.time = {
-    hour: 10
-};
+_.defaults(CONFIG, {
+    "time": {
+        "hour": 10
+    }
+});
 
 if (CONFIG.coordinates) {
     var year = [];
