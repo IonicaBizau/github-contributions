@@ -5,16 +5,8 @@ var sys = require('sys');
 var exec = require('child_process').exec;
 var colors = require('colors'); // https://github.com/Marak/colors.js
 
-var CONFIG = require("./config");
-// TODO https://github.com/IonicaBizau/gh-contributions/issues/3
-
-CONFIG.time = {
-    hour: 10
-};
-
 module.exports = {
     getRepo: function (options, callback) {
-        options.time = options.time || CONFIG.time;
         if (!options.coordinates) {
             return callback("Missing coordinates key of options.");
         }
@@ -22,6 +14,12 @@ module.exports = {
         if (options.coordinates.constructor !== Array) {
             return callback("Invalid coordinates field value. It must be an array.");
         }
+
+        _.defaults(options, {
+            "time": {
+                "hour": 10
+            }
+        });
 
         var year = [];
         var Now = getDateTime(true);
