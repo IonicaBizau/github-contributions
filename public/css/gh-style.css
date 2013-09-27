@@ -23,3 +23,7 @@ textarea {
 	display: none;
 	font-weight: bold;
 }
+
+.day.disabled {
+	opacity: 0;
+}

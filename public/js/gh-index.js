@@ -43,10 +43,12 @@ function getDayAtPoint(point) {
 }
 
 $(document).on("click", ".day", function () {
-    if (this.classList.contains("active")) {
-        this.classList.remove("active");
-    } else {
-        this.classList.add("active");
+    if (!this.classList.contains('disabled')) {
+        if (this.classList.contains("active")) {
+            this.classList.remove("active");
+        } else {
+            this.classList.add("active");
+        }
     }
 });
 
@@ -100,10 +102,17 @@ $(function () {
     var $today = $("g:last > .day").eq(dayOfWeek).attr("title", getDateTime(day));
     $today[0].classList.add("today");
     var $prevDaysInWeek = $today.prevAll(".day");
+
+    $today.nextAll(".day").each(function (i, e) {
+        e.classList.add("disabled");
+    });
+
+    var enabledDays = 1;
     $prevDaysInWeek.each(function (i, e) {
         day = new Date();
         day.setDate(day.getDate() - i - 1);
         $(e).attr("title", getDateTime(day));
+        enabledDays++;
     });
     var $prevWeeks = $today.parent().prevAll("g");
     $prevWeeks.each(function (i, e) {
@@ -114,10 +123,14 @@ $(function () {
                 $daysInWeek[i].classList.add("today");
             }
             $daysInWeek.eq(i).attr("title", getDateTime(day));
+            if (enabledDays >= 366) {
+                $daysInWeek[i].classList.add("disabled");
+            }
+            enabledDays++;
         }
     });
 
-    $days.tooltip({
+    $days.not(".disabled").tooltip({
         placement: "bottom",
         container: "body" // http://stackoverflow.com/questions/17120821/bootstrap-tooltip-not-showing-on-svg-hover
     });
