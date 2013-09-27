@@ -25,7 +25,7 @@ module.exports = {
         var Now = getDateTime(true);
 
         var dayCount = 0;
-        var week;
+        var week = [];
 
         var date = {
             year: Now.year - 1,
@@ -35,37 +35,23 @@ module.exports = {
             hour: options.time.hour
         };
 
-        if (date.cDay) {
-            week = [];
-            for (var i = 0; i < date.cDay; ++i) {
-                week.push({});
-            }
-        }
-
         var dateObj = new Date(date.year, date.month, date.day, date.hour);
 
         for (var i = 0; i < 366; ++i) {
+            var unixStamp = dateObj.getTime() / 1000;
 
-            if (week && week.length === 7) {
+            week[dateObj.getDay()] = {
+                date: unixStamp
+            };
+            if (dateObj.getDay() === 6) {
                 year.push(week);
                 week = [];
             }
-            if (!week) {
-                week = [];
-            }
-
-
-            var unixStamp = dateObj.getTime() / 1000;
-
-            if (unixStamp === 1349074800) {
-                console.log(date);
-            }
-
-            week.push({
-                date: unixStamp
-            });
 
             dateObj.setDate(dateObj.getDate() + 1);
+        }
+        if (week.length > 0) {
+            year.push(week);
         }
 
         fs.writeFile("./test.json", JSON.stringify(year, null, 4));
