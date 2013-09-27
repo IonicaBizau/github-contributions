@@ -25,6 +25,8 @@
 // $container.append($svg);
 
 var $btnGenerate = $(".btn-generate");
+var $btnGenerateRepo = $("#btn-generate-repo");
+var $loadingText = $("#loading-text");
 var $btnImport = $(".btn-import");
 var $ghGenerated = $(".gh-generated");
 var $days = $(".day");
@@ -48,13 +50,28 @@ $(document).on("click", ".day", function () {
     }
 });
 
-$btnGenerate.on("click", function (i, e) {
+$btnGenerate.on("click", function () {
     var dates = [];
     var a = $(".active");
     for (var i = 0; i < a.length; ++i) {
         dates.push(getDayPoint($(a[i])));
     }
-    $ghGenerated.val(JSON.stringify(dates, null, 4));
+    $ghGenerated.val(JSON.stringify({ coordinates: dates, commitsPerDay: 2 }, null, 4));
+});
+
+$btnGenerateRepo.on("click", function () {
+    var generated = $ghGenerated.val();
+    $loadingText.css("color", "black")
+        .text("Generating repository, please wait.").show("slow");
+    $.post('/get-zip', generated, function(data, textStatus, xhr) {
+        if (data.error !== null) {
+            $loadingText.css("color", "red")
+                .text("Error: " + data.error).hide();
+        } else {
+            $loadingText.css("color", "green")
+                .html("Successfully generated repository.");
+        }
+    }, "json");
 });
 
 $btnImport.on("click", function () {

@@ -18,3 +18,8 @@ textarea {
 .today {
 	fill: darkgray;
 }
+
+#loading-text {
+	display: none;
+	font-weight: bold;
+}

@@ -17,8 +17,8 @@ http.createServer(function(req, res){
             });
 
             req.on("end", function () {
-                Contributions.getRepo (data, function (err, repoPublicUrl) {
-                    res.end(JSON.stringify(err) + JSON.stringify(repoPublicUrl));
+                Contributions.getRepo (JSON.parse(data), function (err, publicRepoUrl) {
+                    res.end(JSON.stringify({ error: err, publicRepoUrl: publicRepoUrl }));
                 });
             });
 

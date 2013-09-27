@@ -34,7 +34,7 @@ module.exports = {
             month: Now.month - 1,
             day: Now.day,
             cDay: Now.cDay - 1,
-            hour: CONFIG.time.hour
+            hour: options.time.hour
         };
 
         if (date.cDay) {
@@ -72,15 +72,15 @@ module.exports = {
 
         fs.writeFile("./test.json", JSON.stringify(year, null, 4));
 
-        CONFIG.dates = [];
-        for (var point in CONFIG.coordinates) {
-            var p = CONFIG.coordinates[point];
-            CONFIG.dates.push(year[p.x - 1][p.y - 1].date);
+        options.dates = [];
+        for (var point in options.coordinates) {
+            var p = options.coordinates[point];
+            options.dates.push(year[p.x - 1][p.y - 1].date);
         }
 
         // print dates
-        for (var i = 0; i < CONFIG.dates.length; i++) {
-            console.log(new Date(CONFIG.dates[i] * 1000));
+        for (var i = 0; i < options.dates.length; i++) {
+            console.log(new Date(options.dates[i] * 1000));
         }
 
         runCommand("sh " + __dirname + "/bin/create-repository.sh " + process.cwd(), function () {
@@ -88,23 +88,25 @@ module.exports = {
             var ID = 0;
             (function makeCommit (date) {
                 if (!date || isNaN(date)) {
-                    console.log("Date is: ", date, "Id: ", ID);
-                    process.exit(1);
+                    console.log("Date is: ", date, "ID: ", ID);
+                    callback(null, "[TODO generated repo URL]");
+                    //process.exit(1); ???
                     return;
                 }
                 runCommand("sh " + __dirname + "/bin/create-commit.sh " + process.cwd() + "/generated-repo" + " " + date, function () {
-                    var commitsPerDay = CONFIG.commitsPerDay;
+                    var commitsPerDay = options.commitsPerDay;
 
                     var i = 0;
                     (function makeDayCommit () {
                         console.log(i + " < " + commitsPerDay);
                         if (++i > commitsPerDay) {
-                            if (ID >= CONFIG.dates.length) {
+                            if (ID >= options.dates.length) {
                                 console.log("FINISHED");
-                                process.exit(0);
+                                callback(null, "[TODO generated repo URL]");
+                                //process.exit(0); ???
                             }
-                            if (ID < CONFIG.dates.length) {
-                                makeCommit(CONFIG.dates[++ID]);
+                            if (ID < options.dates.length) {
+                                makeCommit(options.dates[++ID]);
                                 return;
                             }
                         }
@@ -114,7 +116,7 @@ module.exports = {
                         });
                     })()
                 });
-            })(CONFIG.dates[ID]);
+            })(options.dates[ID]);
         });
     }
 };
