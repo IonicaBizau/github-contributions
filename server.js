@@ -1,7 +1,7 @@
 var http = require("http");
 var Static = require('node-static');
 var file = new(Static.Server)('./public');
-var Contributions = require("./constributions");
+var Contributions = require("./contributions");
 
 http.createServer(function(req, res){
 
