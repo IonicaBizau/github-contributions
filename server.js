@@ -3,6 +3,8 @@ var Static = require('node-static');
 var file = new(Static.Server)('./public');
 var Contributions = require("./contributions");
 
+var port = process.env.PORT || 5000;
+
 http.createServer(function(req, res){
 
 
@@ -33,4 +35,5 @@ http.createServer(function(req, res){
 
     file.serve(req, res);
     // TODO 404
-}).listen(process.env.PORT || 5000);
+}).listen(port);
+console.log("Listening on port " + port + ".");
