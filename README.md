@@ -6,8 +6,8 @@ A simple application that generates a repository that being added into your GitH
 Installation
 ------------
 
-    wget https://raw.github.com/IonicaBizau/gh-contributions/master/installer.sh -v -O install.sh; chmod +x install.sh;./install.sh; rm -rf install.sh
+    wget -qO- https://raw.github.com/IonicaBizau/gh-contributions/master/installer.sh | sh
 
 If your system does not have _wget_, you can also use _curl_:
 
-	curl https://raw.github.com/IonicaBizau/gh-contributions/master/installer.sh -o install.sh; chmod +x install.sh;./install.sh; rm -rf install.sh
+    curl https://raw.github.com/IonicaBizau/gh-contributions/master/installer.sh -o install.sh; chmod +x install.sh;./install.sh; rm -rf install.sh
