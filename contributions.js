@@ -67,7 +67,8 @@ module.exports = {
             console.log(new Date(options.dates[i] * 1000));
         }
 
-        runCommand("sh " + __dirname + "/bin/create-repository.sh " + process.cwd(), function () {
+        var repoName = Math.random().toString(36).substring(3);
+        runCommand("sh " + __dirname + "/bin/create-repository.sh " + process.cwd() + " " + repoName, function () {
             console.log("Created");
             var ID = 0;
             (function makeCommit (date) {
@@ -77,7 +78,7 @@ module.exports = {
                     //process.exit(1); ???
                     return;
                 }
-                runCommand("sh " + __dirname + "/bin/create-commit.sh " + process.cwd() + "/generated-repo" + " " + date, function () {
+                runCommand("sh " + __dirname + "/bin/create-commit.sh " + process.cwd() + "/" + repoName + " " + date, function () {
                     var commitsPerDay = options.commitsPerDay;
 
                     var i = 0;
@@ -95,7 +96,7 @@ module.exports = {
                             }
                         }
 
-                        runCommand("sh " + __dirname + "/bin/create-commit.sh " + process.cwd() + "/generated-repo" + " " + (date + i * 60), function () {
+                        runCommand("sh " + __dirname + "/bin/create-commit.sh " + process.cwd() + "/" + repoName + " " + (date + i * 60), function () {
                             makeDayCommit();
                         });
                     })()
