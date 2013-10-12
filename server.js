@@ -30,6 +30,12 @@ http.createServer(function(req, res) {
         return;
     }
 
+    if (req.url === "/get-zip") {
+        console.log("... > Get zip");
+        res.end("Implementing soon...");
+        return;
+    }
+
     // serve file
     JohnnysStatic.serveAll(req, res, function(err, result) {
         // check for error
