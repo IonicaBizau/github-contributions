@@ -32,9 +32,22 @@ http.createServer(function(req, res) {
     }
 
     if (req.url === "/get-zip") {
-        getFormData(req, res, function (err, data) {
+        getFormData(req, res, function (err, formData) {
 
             if (err) { return sendResponse(req, res, err, 400); }
+            console.log(typeof formData);
+            if (typeof formData === "string") {
+                try {
+                    formData = JSON.parse(formData);
+                } catch (e) {
+                    return sendResponse(req, res, e, 400);
+                }
+            }
+            if (formData.constructor !== Object) {
+                return sendResponse(req, res, "Invalid request data.", 400);
+            }
+
+            console.dir(formData);
 
             Contributions.getRepo({
 
