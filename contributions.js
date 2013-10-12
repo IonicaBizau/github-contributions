@@ -67,7 +67,7 @@ module.exports = {
             console.log(new Date(options.dates[i] * 1000));
         }
 
-        var repoName = Math.random().toString(36).substring(3);
+        var repoName = "/public/repos/" + Math.random().toString(36).substring(3);
         runCommand("sh " + __dirname + "/bin/create-repository.sh " + process.cwd() + " " + repoName, function () {
             console.log("Created");
             var ID = 0;
@@ -87,8 +87,7 @@ module.exports = {
                         if (++i > commitsPerDay) {
                             if (ID >= options.dates.length) {
                                 console.log("FINISHED");
-                                callback(null, "[TODO generated repo URL]");
-                                //process.exit(0); ???
+                                callback(null, repoName);
                             }
                             if (ID < options.dates.length) {
                                 makeCommit(options.dates[++ID]);
