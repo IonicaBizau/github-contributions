@@ -67,14 +67,14 @@ module.exports = {
             console.log(new Date(options.dates[i] * 1000));
         }
 
-        var repoName = "/public/repos/" + Math.random().toString(36).substring(3);
+        var repoName = "public/repos/" + Math.random().toString(36).substring(3);
         runCommand("sh " + __dirname + "/bin/create-repository.sh " + process.cwd() + " " + repoName, function () {
             console.log("Created");
             var ID = 0;
             (function makeCommit (date) {
                 if (!date || isNaN(date)) {
                     console.log("Date is: ", date, "ID: ", ID);
-                    callback(null, "[TODO generated repo URL]");
+                    callback(null, repoName);
                     //process.exit(1); ???
                     return;
                 }
