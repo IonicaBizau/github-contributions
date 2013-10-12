@@ -34,8 +34,10 @@ http.createServer(function(req, res) {
     if (req.url === "/get-zip") {
         getFormData(req, res, function (err, formData) {
 
+            // TODO This is a hack. How can we solve this?
+            for (var first in formData) { formData = first; break; }
+
             if (err) { return sendResponse(req, res, err, 400); }
-            console.log(typeof formData);
             if (typeof formData === "string") {
                 try {
                     formData = JSON.parse(formData);
@@ -47,7 +49,6 @@ http.createServer(function(req, res) {
                 return sendResponse(req, res, "Invalid request data.", 400);
             }
 
-            console.dir(formData);
 
             Contributions.getRepo({
 

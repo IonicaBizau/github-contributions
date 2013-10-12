@@ -73,6 +73,8 @@ $btnGenerateRepo.on("click", function () {
         url: "/get-zip",
         // with data
         data: generated,
+        // set content type: json
+        contentType: "json",
         // set the success handler
         success: function (data) {
             $loadingText.css("color", "green")
