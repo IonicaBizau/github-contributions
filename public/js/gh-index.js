@@ -25,7 +25,7 @@
 // $container.append($svg);
 
 var $btnGenerate = $(".btn-generate");
-var $btnGenerateRepo = $("#btn-generate-repo");
+var $btnGenerateRepo = $(".btn-generate-repo");
 var $loadingText = $("#loading-text");
 var $btnImport = $(".btn-import");
 var $ghGenerated = $(".gh-generated");
@@ -65,15 +65,32 @@ $btnGenerateRepo.on("click", function () {
     var generated = $ghGenerated.val();
     $loadingText.css("color", "black")
         .text("Generating repository, please wait.").show("slow");
-    $.post('/get-zip', generated, function(data, textStatus, xhr) {
-        if (data.error !== null) {
-            $loadingText.css("color", "red")
-                .text("Error: " + data.error).hide();
-        } else {
+    // and make the ajax call
+    $.ajax({
+        // type post
+        type: "POST",
+        // to url
+        url: "/get-zip",
+        // with data
+        data: generated,
+        // set the success handler
+        success: function (data) {
+            debugger;
             $loadingText.css("color", "green")
-                .html("Successfully generated repository.");
-        }
-    }, "json");
+                .html("Successfully generated repository. Click <a href='" + data.url + "'>here</a> to download the repository.");
+        },
+        // set the error handler
+        error: function (data) {
+            debugger;
+            // get the json response
+            data = data.responseJSON || {};
+            // and show message
+            $loadingText.css("color", "red")
+                .text("Error: " + data.error).hide().show("slow");
+        },
+        // with data type: json
+        dataType: "json"
+    });
 });
 
 $btnImport.on("click", function () {

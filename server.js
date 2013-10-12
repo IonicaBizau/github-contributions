@@ -31,8 +31,8 @@ http.createServer(function(req, res) {
     }
 
     if (req.url === "/get-zip") {
-        console.log("... > Get zip");
-        res.end("Implementing soon...");
+        res.writeHead(200, {"Content-Type": "application/json"});
+        res.end("{}");
         return;
     }
 
