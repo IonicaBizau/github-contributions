@@ -75,13 +75,11 @@ $btnGenerateRepo.on("click", function () {
         data: generated,
         // set the success handler
         success: function (data) {
-            debugger;
             $loadingText.css("color", "green")
                 .html("Successfully generated repository. Click <a href='" + data.url + "'>here</a> to download the repository.");
         },
         // set the error handler
         error: function (data) {
-            debugger;
             // get the json response
             data = data.responseJSON || {};
             // and show message
