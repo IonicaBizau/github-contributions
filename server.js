@@ -1,6 +1,7 @@
 // require Johnny's static
 var JohnnysStatic = require("johnnys-node-static"),
-    http = require('http');
+    http = require('http'),
+    qs   = require('querystring');
 
 // set static server: public folder
 JohnnysStatic.setStaticServer({root: "./public"});
