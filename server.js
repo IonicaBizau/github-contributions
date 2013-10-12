@@ -1,39 +1,35 @@
-var http = require("http");
-var Static = require('node-static');
-var file = new(Static.Server)('./public');
+// require Johnny's static
+var JohhnysStatic = require("johnnys-node-static"),
+    http = require('http');
+
+// set static server: public folder
+JohhnysStatic.setStaticServer({root: "./public"});
 var Contributions = require("./contributions");
 
-var port = process.env.PORT || 5000;
+// set routes
+JohhnysStatic.setRoutes({
+    "/":       { "url": "/html/index.html" }
+});
 
-http.createServer(function(req, res){
+// create http server
+http.createServer(function(req, res) {
 
+    // safe serve
+    if (JohhnysStatic.exists(req, res)) {
+        // serve file
+        JohhnysStatic.serve(req, res, function (err) {
+            // not found error
+            if (err.code === "ENOENT") {
+                res.end("404 - Not found.");
+                return;
+            }
 
-    if(req.url === "/get-zip") {
-        if (req.method === "POST") {
-            var data = "";
-
-            req.on("data", function (dat) {
-                data += dat.toString();
-            });
-
-            req.on("end", function () {
-                Contributions.getRepo (JSON.parse(data), function (err, publicRepoUrl) {
-                    res.end(JSON.stringify({ error: err, publicRepoUrl: publicRepoUrl }));
-                });
-            });
-
-            req.on("error", function (err) {
-                res.end(JSON.stringify(err));
-            });
-
-            return;
-        }
-
-        res.end("You must post something here.");
+            // other error
+            res.end(JSON.stringify(err));
+        });
         return;
     }
 
-    file.serve(req, res);
-    // TODO 404
-}).listen(port);
-console.log("Listening on port " + port + ".");
+    // if the route doesn't exist, it's a 404!
+    res.end("404 - Not found");
+}).listen(9000);

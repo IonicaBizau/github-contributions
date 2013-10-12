@@ -13,9 +13,9 @@
     "git"
   ],
   "dependencies": {
-    "colors"        : "*",
-    "node-static"   : "*",
-    "underscore"    : "*"
+    "colors"                : "*",
+    "johnnys-node-static"   : "*",
+    "underscore"            : "*"
   },
   "author": "Ionica Bizau <bizauionica@gmail.com>",
   "contributors": [
