@@ -30,6 +30,15 @@ http.createServer(function(req, res) {
         return;
     }
 
-    // if the route doesn't exist, it's a 404!
-    res.end("404 - Not found");
+    // serve file
+    JohhnysStatic.serveAll(req, res, function(err, result) {
+        // check for error
+        if (err) {
+            res.writeHead(err.status, err.headers);
+            res.end();
+        } else {
+            console.log('%s - %s', req.url, result.message);
+        }
+    });
 }).listen(9000);
+console.log("Listening on 9000");
