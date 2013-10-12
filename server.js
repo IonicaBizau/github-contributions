@@ -1,13 +1,13 @@
 // require Johnny's static
-var JohhnysStatic = require("johnnys-node-static"),
+var JohnnysStatic = require("johnnys-node-static"),
     http = require('http');
 
 // set static server: public folder
-JohhnysStatic.setStaticServer({root: "./public"});
+JohnnysStatic.setStaticServer({root: "./public"});
 var Contributions = require("./contributions");
 
 // set routes
-JohhnysStatic.setRoutes({
+JohnnysStatic.setRoutes({
     "/":       { "url": "/html/index.html" }
 });
 
@@ -15,9 +15,9 @@ JohhnysStatic.setRoutes({
 http.createServer(function(req, res) {
 
     // safe serve
-    if (JohhnysStatic.exists(req, res)) {
+    if (JohnnysStatic.exists(req, res)) {
         // serve file
-        JohhnysStatic.serve(req, res, function (err) {
+        JohnnysStatic.serve(req, res, function (err) {
             // not found error
             if (err.code === "ENOENT") {
                 res.end("404 - Not found.");
@@ -31,7 +31,7 @@ http.createServer(function(req, res) {
     }
 
     // serve file
-    JohhnysStatic.serveAll(req, res, function(err, result) {
+    JohnnysStatic.serveAll(req, res, function(err, result) {
         // check for error
         if (err) {
             res.writeHead(err.status, err.headers);
