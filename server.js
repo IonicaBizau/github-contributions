@@ -50,9 +50,7 @@ http.createServer(function(req, res) {
             }
 
 
-            Contributions.getRepo({
-
-            }, function (err, repoData) {
+            Contributions.getRepo(formData, function (err, repoData) {
                 if (err) { return sendResponse(req, res, err, 400); }
                 sendResponse(req, res, repoData);
             });
