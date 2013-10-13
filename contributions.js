@@ -4,7 +4,6 @@ var fs = require("fs");
 var sys = require('sys');
 var exec = require('child_process').exec;
 var colors = require('colors'); // https://github.com/Marak/colors.js
-var archiver  = require("archiver");
 
 module.exports = {
     getRepo: function (options, callback) {
