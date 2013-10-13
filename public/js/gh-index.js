@@ -78,7 +78,7 @@ $btnGenerateRepo.on("click", function () {
         // set the success handler
         success: function (data) {
             $loadingText.css("color", "green")
-                .html("Successfully generated repository. Click <a href='" + data.url + "'>here</a> to download the repository.");
+                .html("Successfully generated repository. Click <a href='" + data.output + "'>here</a> to download the repository.");
         },
         // set the error handler
         error: function (data) {

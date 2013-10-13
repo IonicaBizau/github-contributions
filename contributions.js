@@ -4,6 +4,7 @@ var fs = require("fs");
 var sys = require('sys');
 var exec = require('child_process').exec;
 var colors = require('colors'); // https://github.com/Marak/colors.js
+var archiver  = require("archiver");
 
 module.exports = {
     getRepo: function (options, callback) {
@@ -74,8 +75,10 @@ module.exports = {
             (function makeCommit (date) {
                 if (!date || isNaN(date)) {
                     console.log("Date is: ", date, "ID: ", ID);
-                    callback(null, repoName);
-                    //process.exit(1); ???
+                    dirToZip(repoName, function (err) {
+                        if (err) { return callback(err); }
+                        callback(null, repoName + ".zip");
+                    });
                     return;
                 }
                 runCommand("sh " + __dirname + "/bin/create-commit.sh " + process.cwd() + "/" + repoName + " " + date, function () {
@@ -157,3 +160,7 @@ function getDateTime(obj) {
     }
     return year + "-" + month + "-" + day;
 }
+
+function dirToZip (dir, callback) {
+    runCommand("sh " + __dirname + "/bin/toZip.sh " + dir, callback);
+};
