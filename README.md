@@ -15,4 +15,10 @@ If your system does not have _wget_, you can also use _curl_:
 Example
 -------
 
+Desing your GitHub contributions calendar using the desinger from browser:
+
 ![](http://i.imgur.com/n5gjb0T.png)
+
+A repo will be generated after pusing it to GitHub your profile will look like this:
+
+![](http://i.imgur.com/Z8c1Ed0.png)
