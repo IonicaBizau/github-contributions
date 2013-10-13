@@ -13,7 +13,6 @@
     "git"
   ],
   "dependencies": {
-    "archiver"              : "*",
     "colors"                : "*",
     "johnnys-node-static"   : "*",
     "underscore"            : "*"
