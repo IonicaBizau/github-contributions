@@ -13,7 +13,7 @@ textarea {
     font-family: monospace;
 }
 
-.active { fill: red !important; }
+.active { fill: green !important; }
 .day { fill: #eeeeee; }
 .today {
 	fill: darkgray;
