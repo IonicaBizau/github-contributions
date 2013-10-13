@@ -16,14 +16,14 @@ textarea {
 .active { fill: green !important; }
 .day { fill: #eeeeee; }
 .today {
-	fill: darkgray;
+    fill: darkgray;
 }
 
 #loading-text {
-	display: none;
-	font-weight: bold;
+    display: none;
+    font-weight: bold;
 }
 
 .day.disabled {
-	opacity: 0;
+    opacity: 0;
 }
