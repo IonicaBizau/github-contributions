@@ -54,8 +54,6 @@ module.exports = {
             year.push(week);
         }
 
-        fs.writeFile("./test.json", JSON.stringify(year, null, 4));
-
         options.dates = [];
         for (var point in options.coordinates) {
             var p = options.coordinates[point];
