@@ -1,7 +1,7 @@
 GitHub Contributions
 ====================
 
-A simple application that generates a repository that being added into your GitHub account creates a nice contributions graph.
+A simple application that generates a repository that being added into your GitHub account creates a nice contributions calendar.
 
 Installation
 ------------
@@ -15,10 +15,10 @@ If your system does not have _wget_, you can also use _curl_:
 Example
 -------
 
-Desing your GitHub contributions calendar using the desinger from browser:
+Design your GitHub contributions calendar using the designer from the browser:
 
 ![](http://i.imgur.com/n5gjb0T.png)
 
-A repo will be generated after pusing it to GitHub your profile will look like this:
+A repo will be generated. After pushing it to GitHub, your profile will look like this:
 
 ![](http://i.imgur.com/Z8c1Ed0.png)
