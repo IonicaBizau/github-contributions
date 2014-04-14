@@ -34,10 +34,18 @@ $(document).on("click", ".day", function () {
     var $thisDay = $(this);
 
     // return if the day is disabled
-    if ($thisDay.hasClass('disabled')) { return; }
+    if ($thisDay.attr("class").indexOf('disabled') !== -1) { return; }
 
     // toggle class active
-    $thisDay.toggleClass("active");
+    if ($thisDay.attr("class").indexOf("active") !== -1) {
+        $thisDay.attr("class", function (index, classNames) {
+            return classNames.replace("active",  "");
+        });
+    } else {
+        $thisDay.attr("class", function (index, classNames) {
+            return classNames + " active";
+        });
+    }
 });
 
 // generate click handler
@@ -151,9 +159,14 @@ $(function () {
       ;
 
     // add today and disabled classes
-    $today.addClass("today");
-    $today.nextAll(".day").addClass("disabled");
+    $today.attr("class", function (index, classNames) {
+        return classNames + " today";
+    });
+    $today.nextAll(".day").attr("class", function (index, classNames) {
+        return classNames + " disabled";
+    });
 
+    var i = 0;
     // each day
     $prevDaysInWeek.each(function () {
 
@@ -161,7 +174,7 @@ $(function () {
         day = new Date();
 
         // set its date
-        day.setDate(day.getDate() - i - 1);
+        day.setDate(day.getDate() - (i++) - 1);
 
         // add title attribute
         $(this).attr("title", getDateTime(day));
@@ -183,7 +196,9 @@ $(function () {
 
             // today
             if (day.getFullYear() < new Date().getFullYear()) {
-                $($daysInWeek[i]).addClass("today");
+                $($daysInWeek[i]).attr("class", function (index, classNames) {
+                    return classNames + " today";
+                });
             }
 
             // add title attribute
