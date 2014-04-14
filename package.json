@@ -17,10 +17,10 @@
     "johnnys-node-static"   : "*",
     "underscore"            : "*"
   },
-  "author": "Ionica Bizau <bizauionica@gmail.com>",
+  "author": "Ionică Bizău <bizauionica@gmail.com>",
   "contributors": [
     {
-      "name": "Ionica Bizau",
+      "name": "Ionică Bizău",
       "email": "bizauionica@gmail.com"
     },
     {
@@ -28,7 +28,7 @@
       "email": "silviubogan@gmail.com"
     }
   ],
-  "license": "BSD-2-Clause",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/IonicaBizau/gh-contributions/issues"
   }
