@@ -187,7 +187,7 @@ function runCommand (command, callback) {
     callback = callback || function () {};
 
     // output
-    console.log("> " + command.bold);
+    // console.log("> " + command.bold);
 
     // executes `pwd`
     var child = exec(command, function (error, stdout, stderr) {
@@ -196,7 +196,7 @@ function runCommand (command, callback) {
         // sys.print('stdout: ' + stdout);
         // sys.print('stderr: ' + stderr.red);
         // we've got an error
-        if (error !== null) {
+        if (error) {
             // output it
             // TODO Callback?
             console.log('exec error: '.red.bold + error.bold);
@@ -204,7 +204,7 @@ function runCommand (command, callback) {
     }).on("close", function (code) {
 
         // output
-        console.log("Close: ".bold + code);
+        // console.log("Close: ".bold + code);
 
         // TODO err, data
         callback ();
