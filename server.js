@@ -13,82 +13,6 @@ JohnnysStatic.setRoutes({
     "/":       { "url": "/html/index.html" }
 });
 
-// create http server
-http.createServer(function(req, res) {
-
-    // safe serve
-    if (JohnnysStatic.exists(req, res)) {
-        // serve file
-        JohnnysStatic.serve(req, res, function (err) {
-
-            // not found error
-            if (err.code === "ENOENT") {
-                res.end("404 - Not found.");
-                return;
-            }
-
-            // other error
-            res.end(JSON.stringify(err));
-        });
-        return;
-    }
-
-    // get zip route
-    if (req.url === "/get-zip") {
-
-        // get the form data
-        getFormData(req, res, function (err, formData) {
-
-            // TODO This is a hack. How can we solve this?
-            for (var first in formData) { formData = first; break; }
-
-            // handle error
-            if (err) { return sendResponse(req, res, err, 400); }
-
-            // parse form data
-            if (typeof formData === "string") {
-                try {
-                    formData = JSON.parse(formData);
-                } catch (e) {
-                    return sendResponse(req, res, e, 400);
-                }
-            }
-
-            // validate form data
-            if (formData.constructor !== Object) {
-                return sendResponse(req, res, "Invalid request data.", 400);
-            }
-
-            // generate repository
-            Contributions.getRepo(formData, function (err, repoLink) {
-
-                // handle error
-                if (err) { return sendResponse(req, res, err, 400); }
-
-                // prepare the repository download link
-                repoLink = repoLink.substring(6);
-
-                // send response
-                sendResponse(req, res, repoLink);
-            });
-        });
-        return;
-    }
-
-    // serve file
-    JohnnysStatic.serveAll(req, res, function(err, result) {
-
-        // check for error
-        if (err) {
-            res.writeHead(err.status, err.headers);
-            res.end();
-        } else {
-            console.log('%s - %s', req.url, result.message);
-        }
-    });
-}).listen(9000);
-console.log("Listening on 9000");
-
 /*
  *  Returns the form data
  *
@@ -183,3 +107,89 @@ function sendResponse (req, res, content, status, contentType, force) {
     // and end the response
     res.end(JSON.stringify(response, null, 4));
 };
+
+// create http server
+var server = http.createServer(function(req, res) {
+
+    // safe serve
+    if (JohnnysStatic.exists(req, res)) {
+        // serve file
+        JohnnysStatic.serve(req, res, function (err) {
+
+            // not found error
+            if (err.code === "ENOENT") {
+                res.end("404 - Not found.");
+                return;
+            }
+
+            // other error
+            res.end(JSON.stringify(err));
+        });
+        return;
+    }
+
+    // get zip route
+    if (req.url === "/get-zip") {
+
+        // get the form data
+        getFormData(req, res, function (err, formData) {
+
+            // TODO This is a hack. How can we solve this?
+            for (var first in formData) { formData = first; break; }
+
+            // handle error
+            if (err) { return sendResponse(req, res, err, 400); }
+
+            // parse form data
+            if (typeof formData === "string") {
+                try {
+                    formData = JSON.parse(formData);
+                } catch (e) {
+                    return sendResponse(req, res, e, 400);
+                }
+            }
+
+            // validate form data
+            if (formData.constructor !== Object) {
+                return sendResponse(req, res, "Invalid request data.", 400);
+            }
+
+            // generate repository
+            Contributions.getRepo(formData, function (err, repoLink) {
+
+                // handle error
+                if (err) { return sendResponse(req, res, err, 400); }
+
+                // prepare the repository download link
+                repoLink = repoLink.substring(6);
+
+                // send response
+                sendResponse(req, res, repoLink);
+            }, function (progress) {
+
+                // TODO Send to the client that pressed "Generate repo"
+                io.sockets.emit("progress", {
+                    message: progress.toFixed(2) + " Completed"
+                  , value: progress
+                });
+            });
+        });
+        return;
+    }
+
+    // serve file
+    JohnnysStatic.serveAll(req, res, function(err, result) {
+
+        // check for error
+        if (err) {
+            res.writeHead(err.status, err.headers);
+            res.end();
+        } else {
+            console.log('%s - %s', req.url, result.message);
+        }
+    });
+}).listen(9000);
+console.log("Listening on 9000");
+
+// Socket.io server listens to our app
+var io = require('socket.io').listen(server, {log: false});

@@ -506,6 +506,10 @@
                 </div>
             </div>
             <textarea class="gh-generated"></textarea>
+            <div class="progress progress-striped active">
+                <div class="progress-bar"  role="progressbar" aria-valuemax="100">
+                </div>
+            </div>
             <button class="btn btn-primary btn-generate"> Generate data </button>
             <button class="btn btn-warning btn-import"> Import </button>
             <button class="btn btn-primary btn-generate-repo"> Generate repository from data </button>
@@ -514,5 +518,6 @@
     </body>
     <script src="js/jquery.min.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src='/socket.io/socket.io.js'></script>
     <script src="js/index.js"></script>
 </html>

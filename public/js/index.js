@@ -5,7 +5,20 @@ var $btnGenerate        = $(".btn-generate")
   , $btnImport          = $(".btn-import")
   , $ghGenerated        = $(".gh-generated")
   , $days               = null
-  ;
+  , socket              = io.connect();
+
+// listen for progress
+socket.on("progress", function(data) {
+
+    // get the progress bar element
+    var $progress = $(".progress-bar");
+
+    // set the value and the message
+    $progress
+        .css("width", data.value + "%")
+        .text(data.message);
+
+});
 
 /**
  *  Returns an object containing `x` and `y` fields that represent the
@@ -76,6 +89,9 @@ $btnGenerateRepo.on("click", function () {
     $loadingText
         .css("color", "black")
         .text("Generating repository, please wait.").show("slow");
+
+    // reset the progress value
+    $(".progress-bar").css("width", "0");
 
     // and make the ajax call
     $.ajax({

@@ -28,7 +28,11 @@ module.exports = {
      *         ]
      *
      */
-    getRepo: function (options, callback) {
+    getRepo: function (options, callback, progress) {
+
+        // set default values for callback and progress
+        callback = callback || function () {};
+        progress = progress || function () {};
 
         // coordinates
         if (!options.coordinates) {
@@ -102,7 +106,10 @@ module.exports = {
         }
 
         // generate the repository path
-        var repoName = "public/repos/" + Math.random().toString(36).substring(3);
+        var repoName = "public/repos/" + Math.random().toString(36).substring(3)
+          , numberOfCommits = options.coordinates.length * options.commitsPerDay
+          , completedCommits = 0
+          ;
 
         // init repository
         runCommand("sh " + __dirname + "/bin/create-repository.sh " + process.cwd() + " " + repoName, function () {
@@ -134,16 +141,14 @@ module.exports = {
                 runCommand("sh " + __dirname + "/bin/create-commit.sh " + process.cwd() + "/" + repoName + " " + date, function () {
 
                     // how many commits?
-                    var commitsPerDay = options.commitsPerDay;
+                    var commitsPerDay = options.commitsPerDay
 
-                    // current commit
-                    var i = 0;
+                        // current commit
+                      , i = 0
+                      ;
 
                     // make day commit
                     (function makeDayCommit () {
-
-                        // output
-                        console.log(i + " < " + commitsPerDay);
 
                         // finished?
                         if (++i > commitsPerDay) {
@@ -165,7 +170,11 @@ module.exports = {
 
                         // create commit
                         runCommand("sh " + __dirname + "/bin/create-commit.sh " + process.cwd() + "/" + repoName + " " + (date + i * 60), function () {
+
                             // TODO handle error
+
+                            // send progress
+                            progress (++completedCommits * 100 / numberOfCommits);
 
                             // try to make another commit this day
                             makeDayCommit();

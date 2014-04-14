@@ -27,3 +27,8 @@ textarea {
 .day.disabled {
     opacity: 0;
 }
+
+.progress-bar {
+    font-weight: bold;
+    padding-top: 2px;
+}

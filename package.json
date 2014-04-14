@@ -15,7 +15,8 @@
   "dependencies": {
     "colors": "*",
     "johnnys-node-static": "*",
-    "underscore": "*"
+    "underscore": "*",
+    "socket.io": "*"
   },
   "author": "Ionică Bizău <bizauionica@gmail.com>",
   "contributors": [
