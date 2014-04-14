@@ -1,152 +1,249 @@
-var spawn = require('child_process').spawn;
-var _ = require('underscore');
-var fs = require("fs");
-var sys = require('sys');
-var exec = require('child_process').exec;
-var colors = require('colors'); // https://github.com/Marak/colors.js
+// dependencies
+var spawn   = require('child_process').spawn
+  , exec    = require('child_process').exec
+  , fs      = require("fs")
+  , sys     = require('sys')
+  , colors  = require('colors')
+  , _       = require('underscore')
+  ;
 
+/**
+ *  Contributions object
+ *
+ */
 module.exports = {
+
+    /**
+     *  Contributions.getRepo (options, callback)
+     *  Generates a repository that will be compressend and its download link wil
+     *  be send via callback
+     *
+     *  Arguments
+     *    @options: object containing:
+     *      - coordinates: an array of points. E.g.:
+     *         [
+     *             {x: 1, y: 2}
+     *           , {x: 4, y: 1}
+     *           ...
+     *         ]
+     *
+     */
     getRepo: function (options, callback) {
+
+        // coordinates
         if (!options.coordinates) {
             return callback("Missing coordinates key of options.");
         }
 
+        // validate coordinates
         if (options.coordinates.constructor !== Array) {
             return callback("Invalid coordinates field value. It must be an array.");
         }
 
+        // merge defaults
         _.defaults(options, {
             "time": {
                 "hour": 10
             }
         });
 
-        var year = [];
-        var Now = getDateTime(true);
+        // initialize year array and the dateObj
+        var year = []
+          , Now = getDateTime(true)
+          , dayCount = 0
+          , week = []
+          , date = {
+                year: Now.year - 1,
+                month: Now.month - 1,
+                day: Now.day,
+                cDay: Now.cDay - 1,
+                hour: options.time.hour
+            }
+          , dateObj = new Date(date.year, date.month, date.day, date.hour)
+          ;
 
-        var dayCount = 0;
-        var week = [];
-
-        var date = {
-            year: Now.year - 1,
-            month: Now.month - 1,
-            day: Now.day,
-            cDay: Now.cDay - 1,
-            hour: options.time.hour
-        };
-
-        var dateObj = new Date(date.year, date.month, date.day, date.hour);
-
+        // each day in year
         for (var i = 0; i < 366; ++i) {
+
+            // get the unix stamp
             var unixStamp = dateObj.getTime() / 1000;
 
+            // set the unix stamp in the current day
             week[dateObj.getDay()] = {
                 date: unixStamp
             };
+
+            // we have a new week
             if (dateObj.getDay() === 6) {
                 year.push(week);
                 week = [];
             }
 
+            // update the date
             dateObj.setDate(dateObj.getDate() + 1);
         }
+
+        // push the last week
         if (week.length > 0) {
             year.push(week);
         }
 
+        // initialize dates
         options.dates = [];
-        for (var point in options.coordinates) {
-            var p = options.coordinates[point];
-            options.dates.push(year[p.x - 1][p.y - 1].date);
+
+        // each point in coordinates
+        for (var i = 0; i < options.coordinates.length; ++i) {
+
+            // get the current point
+            var cPoint = options.coordinates[i];
+
+            // push the new date in the array
+            options.dates.push(year[cPoint.x - 1][cPoint.y - 1].date);
         }
 
-        // print dates
-        for (var i = 0; i < options.dates.length; i++) {
-            console.log(new Date(options.dates[i] * 1000));
-        }
-
+        // generate the repository path
         var repoName = "public/repos/" + Math.random().toString(36).substring(3);
+
+        // init repository
         runCommand("sh " + __dirname + "/bin/create-repository.sh " + process.cwd() + " " + repoName, function () {
-            console.log("Created");
-            var ID = 0;
+
+            // TODO handle error
+
+            // the current commit
+            var id = 0;
+
+            // make commit
             (function makeCommit (date) {
+
+                // we finished the generating
                 if (!date || isNaN(date)) {
-                    console.log("Date is: ", date, "ID: ", ID);
-                    dirToZip(repoName, function (err) {
+
+                    // compress the directory
+                    runCommand("sh " + __dirname + "/bin/toZip.sh " + repoName, function (err) {
+
+                        // handle error
                         if (err) { return callback(err); }
+
+                        // send the final path (path to the zipped file)
                         callback(null, repoName + ".zip");
                     });
                     return;
                 }
+
+                // create commit
                 runCommand("sh " + __dirname + "/bin/create-commit.sh " + process.cwd() + "/" + repoName + " " + date, function () {
+
+                    // how many commits?
                     var commitsPerDay = options.commitsPerDay;
 
+                    // current commit
                     var i = 0;
+
+                    // make day commit
                     (function makeDayCommit () {
+
+                        // output
                         console.log(i + " < " + commitsPerDay);
+
+                        // finished?
                         if (++i > commitsPerDay) {
-                            if (ID >= options.dates.length) {
+
+                            // finished
+                            if (id >= options.dates.length) {
                                 console.log("FINISHED");
+
+                                // TODO Why callback?
                                 callback(null, repoName);
                             }
-                            if (ID < options.dates.length) {
-                                makeCommit(options.dates[++ID]);
+
+                            // yep, go the the next day
+                            if (id < options.dates.length) {
+                                makeCommit(options.dates[++id]);
                                 return;
                             }
                         }
 
+                        // create commit
                         runCommand("sh " + __dirname + "/bin/create-commit.sh " + process.cwd() + "/" + repoName + " " + (date + i * 60), function () {
+                            // TODO handle error
+
+                            // try to make another commit this day
                             makeDayCommit();
                         });
                     })()
                 });
-            })(options.dates[ID]);
+            })(options.dates[id]);
         });
     }
 };
 
+/**
+ *  This runs a bash command
+ *
+ */
 function runCommand (command, callback) {
 
+    // default value for callback
+    callback = callback || function () {};
+
+    // output
     console.log("> " + command.bold);
 
     // executes `pwd`
     var child = exec(command, function (error, stdout, stderr) {
-        sys.print('stdout: ' + stdout);
-        sys.print('stderr: ' + stderr.red);
+
+        // output
+        // sys.print('stdout: ' + stdout);
+        // sys.print('stderr: ' + stderr.red);
+        // we've got an error
         if (error !== null) {
+            // output it
+            // TODO Callback?
             console.log('exec error: '.red.bold + error.bold);
         }
     }).on("close", function (code) {
+
+        // output
         console.log("Close: ".bold + code);
-        callback ? callback() : "";
+
+        // TODO err, data
+        callback ();
     });
 }
 
+/**
+ *  Adds `0` to stringified number if this is needed
+ *
+ */
 function padWithZero(x) {
     return (x < 10 ? "0" : "") + x;
 }
 
+/**
+ *  Returns the time in the moment when it's called
+ *  If `obj` is true an object is returned
+ *
+ */
 function getDateTime(obj) {
 
-    var date = new Date();
+    // get date, hour, minute, second, year, month and day
+    var date = new Date()
+      , hour = date.getHours()
+      , min  = date.getMinutes()
+      , sec  = date.getSeconds()
+      , year = date.getFullYear()
+      , month = date.getMonth() + 1
+      , day  = date.getDate()
+      ;
 
-    var hour = date.getHours();
+    // add `0` if needed
     hour = padWithZero(hour);
-
-    var min  = date.getMinutes();
     min = padWithZero(min);
-
-    var sec  = date.getSeconds();
     sec = padWithZero(sec);
-
-    var year = date.getFullYear();
-
-    var month = date.getMonth() + 1;
     month = padWithZero(month);
-
-    var day  = date.getDate();
     day = padWithZero(day);
 
+    // obj is true, return an object
     if (obj) {
         return {
             year: year,
@@ -155,9 +252,7 @@ function getDateTime(obj) {
             cDay: date.getDay()
         }
     }
+
+    // return a string
     return year + "-" + month + "-" + day;
 }
-
-function dirToZip (dir, callback) {
-    runCommand("sh " + __dirname + "/bin/toZip.sh " + dir, callback);
-};

@@ -1,11 +1,12 @@
-// require Johnny's static
-var JohnnysStatic = require("johnnys-node-static"),
-    http = require('http'),
-    qs   = require('querystring');
+// dependencies
+var JohnnysStatic = require("johnnys-node-static")
+  , http = require('http')
+  , qs   = require('querystring')
+  , Contributions = require("./contributions")
+  ;
 
 // set static server: public folder
 JohnnysStatic.setStaticServer({root: "./public"});
-var Contributions = require("./contributions");
 
 // set routes
 JohnnysStatic.setRoutes({
@@ -19,6 +20,7 @@ http.createServer(function(req, res) {
     if (JohnnysStatic.exists(req, res)) {
         // serve file
         JohnnysStatic.serve(req, res, function (err) {
+
             // not found error
             if (err.code === "ENOENT") {
                 res.end("404 - Not found.");
@@ -31,13 +33,19 @@ http.createServer(function(req, res) {
         return;
     }
 
+    // get zip route
     if (req.url === "/get-zip") {
+
+        // get the form data
         getFormData(req, res, function (err, formData) {
 
             // TODO This is a hack. How can we solve this?
             for (var first in formData) { formData = first; break; }
 
+            // handle error
             if (err) { return sendResponse(req, res, err, 400); }
+
+            // parse form data
             if (typeof formData === "string") {
                 try {
                     formData = JSON.parse(formData);
@@ -45,23 +53,31 @@ http.createServer(function(req, res) {
                     return sendResponse(req, res, e, 400);
                 }
             }
+
+            // validate form data
             if (formData.constructor !== Object) {
                 return sendResponse(req, res, "Invalid request data.", 400);
             }
 
-
+            // generate repository
             Contributions.getRepo(formData, function (err, repoLink) {
+
+                // handle error
                 if (err) { return sendResponse(req, res, err, 400); }
+
+                // prepare the repository download link
                 repoLink = repoLink.substring(6);
+
+                // send response
                 sendResponse(req, res, repoLink);
             });
-
         });
         return;
     }
 
     // serve file
     JohnnysStatic.serveAll(req, res, function(err, result) {
+
         // check for error
         if (err) {
             res.writeHead(err.status, err.headers);
@@ -79,8 +95,10 @@ console.log("Listening on 9000");
  * */
 function getFormData(request, response, callback) {
 
+    // handle response as function
     if (typeof response === "function") {
         callback = response;
+        response = undefined;
     }
 
     // the request method must be 'POST'
@@ -140,12 +158,16 @@ function sendResponse (req, res, content, status, contentType, force) {
 
     // if content is string
     if (typeof content === "string") {
+
         // set output
         response.output = content;
+
         // but if it is an error
         if (status !== 200) {
+
             // set error
             response.error = content;
+
             // and delete output
             delete response.output;
         }
