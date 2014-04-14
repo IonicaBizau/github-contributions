@@ -1,36 +1,17 @@
-// var $container = $(".js-graph.js-calendar-graph");
-// var $svg = $("<svg width='721' height='110' id='calendar-graph'>");
-//
-// var delta = 13;
-// var g = {
-//     x: 13,
-//     y: 0
-// };
-// var rect = {
-//     y: 0
-// }
-//
-// for (var i = 0; i < 53; ++i) {
-//     var $g = $("<g transform='translate(" + g.x + "," + g.y + ")'>");
-//     rect.x += delta;
-//     for (var j = 0; j < 7; ++j) {
-//         var $rect = $('<rect class="day" width="11" height="11" y="' + rect.y + '"></rect>');
-//         rect.y += delta;
-//         $g.append($rect);
-//     }
-//     $svg.append($g);
-//     g.x += delta;
-// }
-//
-// $container.append($svg);
+// jQuery elements
+var $btnGenerate        = $(".btn-generate")
+  , $btnGenerateRepo    = $(".btn-generate-repo")
+  , $loadingText        = $("#loading-text")
+  , $btnImport          = $(".btn-import")
+  , $ghGenerated        = $(".gh-generated")
+  , $days               = null
+  ;
 
-var $btnGenerate = $(".btn-generate");
-var $btnGenerateRepo = $(".btn-generate-repo");
-var $loadingText = $("#loading-text");
-var $btnImport = $(".btn-import");
-var $ghGenerated = $(".gh-generated");
-var $days = $(".day");
-
+/**
+ *  Returns an object containing `x` and `y` fields that represent the
+ *  point coordinates of the commit
+ *
+ */
 function getDayPoint($day) {
     return {
         x: $day.parent().index() + 1,
@@ -38,137 +19,222 @@ function getDayPoint($day) {
     };
 }
 
+/**
+ *  Converts a point to a day jQuery element
+ *
+ */
 function getDayAtPoint(point) {
     return $("g").eq(point.x - 1).children(".day").eq(point.x - 1);
 }
 
+// .day click handler
 $(document).on("click", ".day", function () {
-    if (!this.classList.contains('disabled')) {
-        if (this.classList.contains("active")) {
-            this.classList.remove("active");
-        } else {
-            this.classList.add("active");
-        }
-    }
+
+    // get the clicked day
+    var $thisDay = $(this);
+
+    // return if the day is disabled
+    if ($thisDay.hasClass('disabled')) { return; }
+
+    // toggle class active
+    $thisDay.toggleClass("active");
 });
 
+// generate click handler
 $btnGenerate.on("click", function () {
+
+    // get the dates
     var dates = [];
-    var a = $(".active");
-    for (var i = 0; i < a.length; ++i) {
-        dates.push(getDayPoint($(a[i])));
-    }
-    $ghGenerated.val(JSON.stringify({ coordinates: dates, commitsPerDay: 2 }, null, 4));
+    $(".active").each(function () {
+        dates.push(getDayPoint($(this)));
+    });
+
+    // stringify the dates
+    $ghGenerated.val(
+        JSON.stringify({
+            coordinates: dates
+          , commitsPerDay: 2
+        }, null, 4)
+    );
 });
 
+// generate repository click handler
 $btnGenerateRepo.on("click", function () {
+
+    // get the generated data
     var generated = $ghGenerated.val();
-    $loadingText.css("color", "black")
+
+    // show loading
+    $loadingText
+        .css("color", "black")
         .text("Generating repository, please wait.").show("slow");
+
     // and make the ajax call
     $.ajax({
+
         // type post
-        type: "POST",
+        type: "POST"
+
         // to url
-        url: "/get-zip",
+      , url: "/get-zip"
+
         // with data
-        data: generated,
+      , data: generated
+
         // set content type: json
-        contentType: "json",
+      , contentType: "json"
+
+        // with data type: json
+      , dataType: "json"
+
         // set the success handler
-        success: function (data) {
-            $loadingText.css("color", "green")
+      , success: function (data) {
+
+            // show the download link
+            $loadingText
+                .css("color", "green")
                 .html("Successfully generated repository. Click <a href='" + data.output + "'>here</a> to download the repository.");
-        },
+        }
+
         // set the error handler
-        error: function (data) {
+      , error: function (data) {
+
             // get the json response
             data = data.responseJSON || {};
+
             // and show message
-            $loadingText.css("color", "red")
+            $loadingText
+                .css("color", "red")
                 .text("Error: " + data.error).hide().show("slow");
-        },
-        // with data type: json
-        dataType: "json"
+        }
     });
 });
 
+// button import click handler
 $btnImport.on("click", function () {
-    var generated = $ghGenerated.val();
-    var dates;
+
+    // get the generated array and get all days
+    var generated = $ghGenerated.val()
+      ;
 
     try {
-        dates = JSON.parse(generated);
+        var dates = JSON.parse(generated);
     } catch (e) { return alert(e.message); }
 
-    for (var i = 0; i < $days.length; ++i) {
-        var $day = $($days[i]);
-        var point = getDayPoint($day);
+    $days.each(function () {
 
+        // get the current day
+        var $day = $(this)
+          , point = getDayPoint($day)
+          ;
+
+        // each date
         for (var j = 0; j < dates.length; ++j) {
+
+            // we found this day
             if (point.x === dates[j].x && point.y === dates[j].y) {
+                // click it
                 $day.click();
             }
         }
-    }
+    });
 });
 
 $(function () {
-    var dayOfWeek = new Date(Date.now()).getDay();
-    var day = new Date();
-    var $today = $("g:last > .day").eq(dayOfWeek).attr("title", getDateTime(day));
-    $today[0].classList.add("today");
-    var $prevDaysInWeek = $today.prevAll(".day");
 
-    $today.nextAll(".day").each(function (i, e) {
-        e.classList.add("disabled");
-    });
+    var day = new Date()
+      , dayOfWeek = day.getDay()
+      , $today = $("g:last > .day").eq(dayOfWeek).attr("title", getDateTime(day))
+      , $prevDaysInWeek = $today.prevAll(".day")
+      , $prevWeeks = $today.parent().prevAll("g")
+      , enabledDays = 1
+      ;
 
-    var enabledDays = 1;
-    $prevDaysInWeek.each(function (i, e) {
+    // add today and disabled classes
+    $today.addClass("today");
+    $today.nextAll(".day").addClass("disabled");
+
+    // each day
+    $prevDaysInWeek.each(function () {
+
+        // get the current day
         day = new Date();
+
+        // set its date
         day.setDate(day.getDate() - i - 1);
-        $(e).attr("title", getDateTime(day));
-        enabledDays++;
+
+        // add title attribute
+        $(this).attr("title", getDateTime(day));
+
+        ++enabledDays;
     });
-    var $prevWeeks = $today.parent().prevAll("g");
-    $prevWeeks.each(function (i, e) {
-        var $daysInWeek = $(e).children(".day");
+
+    // each week
+    $prevWeeks.each(function () {
+
+        // get the days of this week
+        var $daysInWeek = $(this).children(".day");
+
+        // each day
         for (var i = $daysInWeek.length - 1; i >= 0; i--) {
+
+            // set the new date
             day.setDate(day.getDate() - 1);
+
+            // today
             if (day.getFullYear() < new Date().getFullYear()) {
-                $daysInWeek[i].classList.add("today");
+                $($daysInWeek[i]).addClass("today");
             }
+
+            // add title attribute
             $daysInWeek.eq(i).attr("title", getDateTime(day));
+
+            // disable day
             if (enabledDays >= 366) {
                 $daysInWeek[i].classList.add("disabled");
             }
-            enabledDays++;
+            ++enabledDays;
         }
     });
 
+    // get all days
+    $days = $(".day");
+
+    // init tooltip
     $days.not(".disabled").tooltip({
         placement: "bottom",
-        container: "body" // http://stackoverflow.com/questions/17120821/bootstrap-tooltip-not-showing-on-svg-hover
+        container: "body"
     });
 });
 
+/**
+ *  Adds `0` to stringified number if this is needed
+ *
+ */
 function padWithZero(x) {
     return (x < 10 ? "0" : "") + x;
 }
 
+/**
+ *  Returns a stringified date
+ */
 function getDateTime(date) {
+
+    // no date provided, create a new date
     if (!date) {
         date = new Date();
     }
 
-    var year = date.getFullYear();
+    //  get year, month and day
+    var year = date.getFullYear()
+      , month = date.getMonth() + 1
+      , day  = date.getDate()
+      ;
 
-    var month = date.getMonth() + 1;
+    // pad with zero
     month = padWithZero(month);
+    day   = padWithZero(day);
 
-    var day  = date.getDate();
-    day = padWithZero(day);
-
+    // return the strinified date
     return year + "-" + month + "-" + day;
 }
