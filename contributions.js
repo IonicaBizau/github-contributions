@@ -237,11 +237,11 @@ function getDateTime(obj) {
       ;
 
     // add `0` if needed
-    hour = padWithZero(hour);
-    min = padWithZero(min);
-    sec = padWithZero(sec);
+    hour  = padWithZero(hour);
+    min   = padWithZero(min);
+    sec   = padWithZero(sec);
     month = padWithZero(month);
-    day = padWithZero(day);
+    day   = padWithZero(day);
 
     // obj is true, return an object
     if (obj) {
