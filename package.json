@@ -1,6 +1,6 @@
 {
   "name": "gh-contributions",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "A simple application that generates a repository that being added into your Github account creates a nice contributions graph.",
   "main": "index.js",
   "repository": {
@@ -13,23 +13,22 @@
     "git"
   ],
   "dependencies": {
-    "colors"                : "*",
-    "johnnys-node-static"   : "*",
-    "underscore"            : "*"
+    "colors": "*",
+    "johnnys-node-static": "*",
+    "underscore": "*"
   },
   "author": "Ionică Bizău <bizauionica@gmail.com>",
   "contributors": [
-    {
-      "name": "Ionică Bizău",
-      "email": "bizauionica@gmail.com"
-    },
-    {
-      "name": "Silviu Bogan",
-      "email": "silviubogan@gmail.com"
-    }
+    "Ionică Bizău <bizauionica@gmail.com>",
+    "Silviu Bogan <silviubogan@gmail.com>"
   ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/IonicaBizau/gh-contributions/issues"
-  }
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "homepage": "https://github.com/IonicaBizau/gh-contributions",
+  "devDependencies": {}
 }
