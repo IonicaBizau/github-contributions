@@ -122,13 +122,13 @@ $btnGenerateRepo.on("click", function () {
 $btnImport.on("click", function () {
 
     // get the generated array and get all days
-    var generated = $ghGenerated.val()
-      ;
+    var generated = $ghGenerated.val();
 
     try {
-        var dates = JSON.parse(generated);
+        var coordinates = JSON.parse(generated).coordinates;
     } catch (e) { return alert(e.message); }
 
+    // each day
     $days.each(function () {
 
         // get the current day
@@ -137,10 +137,11 @@ $btnImport.on("click", function () {
           ;
 
         // each date
-        for (var j = 0; j < dates.length; ++j) {
+        for (var j = 0; j < coordinates.length; ++j) {
 
             // we found this day
-            if (point.x === dates[j].x && point.y === dates[j].y) {
+            if (point.x === coordinates[j].x && point.y === coordinates[j].y) {
+
                 // click it
                 $day.click();
             }
