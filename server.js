@@ -1,17 +1,13 @@
 // dependencies
-var JohnnysStatic = require("johnnys-node-static")
+var Statique = require ("statique")
   , http = require('http')
   , qs   = require('querystring')
   , Contributions = require("./contributions")
   ;
 
 // set static server: public folder
-JohnnysStatic.setStaticServer({root: "./public"});
-
-// set routes
-JohnnysStatic.setRoutes({
-    "/":       { "url": "/html/index.html" }
-});
+Statique.setStaticServer({root: __dirname + "/public"})
+Statique.setRoutes({"/": "/html/index.html"});
 
 /*
  *  Returns the form data
@@ -111,23 +107,6 @@ function sendResponse (req, res, content, status, contentType, force) {
 // create http server
 var server = http.createServer(function(req, res) {
 
-    // safe serve
-    if (JohnnysStatic.exists(req, res)) {
-        // serve file
-        JohnnysStatic.serve(req, res, function (err) {
-
-            // not found error
-            if (err.code === "ENOENT") {
-                res.end("404 - Not found.");
-                return;
-            }
-
-            // other error
-            res.end(JSON.stringify(err));
-        });
-        return;
-    }
-
     // get zip route
     if (req.url === "/get-zip") {
 
@@ -177,17 +156,8 @@ var server = http.createServer(function(req, res) {
         return;
     }
 
-    // serve file
-    JohnnysStatic.serveAll(req, res, function(err, result) {
-
-        // check for error
-        if (err) {
-            res.writeHead(err.status, err.headers);
-            res.end();
-        } else {
-            console.log('%s - %s', req.url, result.message);
-        }
-    });
+    // serve files
+    Statique.serve (req, res);
 }).listen(9000);
 console.log("Listening on 9000");
 

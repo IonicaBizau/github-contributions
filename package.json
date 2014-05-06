@@ -14,7 +14,7 @@
   ],
   "dependencies": {
     "colors": "*",
-    "johnnys-node-static": "*",
+    "statique": "*",
     "underscore": "*",
     "socket.io": "*"
   },
