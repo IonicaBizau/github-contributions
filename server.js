@@ -107,54 +107,6 @@ function sendResponse (req, res, content, status, contentType, force) {
 // create http server
 var server = http.createServer(function(req, res) {
 
-    // get zip route
-    if (req.url === "/get-zip") {
-
-        // get the form data
-        getFormData(req, res, function (err, formData) {
-
-            // TODO This is a hack. How can we solve this?
-            for (var first in formData) { formData = first; break; }
-
-            // handle error
-            if (err) { return sendResponse(req, res, err, 400); }
-
-            // parse form data
-            if (typeof formData === "string") {
-                try {
-                    formData = JSON.parse(formData);
-                } catch (e) {
-                    return sendResponse(req, res, e, 400);
-                }
-            }
-
-            // validate form data
-            if (formData.constructor !== Object) {
-                return sendResponse(req, res, "Invalid request data.", 400);
-            }
-
-            // generate repository
-            Contributions.getRepo(formData, function (err, repoLink) {
-
-                // handle error
-                if (err) { return sendResponse(req, res, err, 400); }
-
-                // prepare the repository download link
-                repoLink = repoLink.substring(6);
-
-                // send response
-                sendResponse(req, res, repoLink);
-            }, function (progress) {
-
-                // TODO Send to the client that pressed "Generate repo"
-                io.sockets.emit("progress", {
-                    message: progress.toFixed(2) + " Completed"
-                  , value: progress
-                });
-            });
-        });
-        return;
-    }
 
     // serve files
     Statique.serve (req, res);
@@ -163,3 +115,57 @@ console.log("Listening on 9000");
 
 // Socket.io server listens to our app
 var io = require('socket.io').listen(server, {log: false});
+
+// listen for connections
+io.sockets.on('connection', function (client) {
+    client.on ("getZip", function (clientData) {
+
+        debugger;
+        if (client._generatingZip) {
+            // TODO Send error
+            return;
+        }
+
+        client._generatingZip = true;
+
+        // parse form data
+        if (typeof clientData === "string") {
+            try {
+                clientData = JSON.parse(clientData);
+            } catch (e) {
+                // TODO Send error
+                return;
+            }
+        }
+
+        // validate form data
+        if (clientData.constructor !== Object) {
+            //return sendResponse(req, res, "Invalid request data.", 400);
+                // TODO Send error
+            return;
+        }
+
+        // generate repository
+        Contributions.getRepo(clientData, function (err, repoLink) {
+
+            // handle error
+            // TODO send error
+            if (err) { return; }
+
+            // prepare the repository download link
+            repoLink = repoLink.substring(6);
+
+            // success
+            client.emit("complete", {
+                error: null
+              , output: repoLink
+            });
+        }, function (progress) {
+
+            client.emit("progress", {
+                message: progress.toFixed(2) + " Completed"
+              , value: progress
+            });
+        });
+    });
+});

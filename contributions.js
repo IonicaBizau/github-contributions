@@ -206,6 +206,7 @@ function runCommand (command, callback) {
         // sys.print('stderr: ' + stderr.red);
         // we've got an error
         if (error) {
+            debugger;
             // output it
             // TODO Callback?
             console.log('exec error: '.red.bold + error.bold);

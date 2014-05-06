@@ -20,6 +20,21 @@ socket.on("progress", function(data) {
 
 });
 
+socket.on("complete", function (data) {
+
+    // handle error
+    if (data.error) {
+        $loadingText
+            .css("color", "red")
+            .text("Error: " + data.error).hide().show("slow");
+        return;
+    }
+
+    $loadingText
+        .css("color", "green")
+        .html("Successfully generated repository. Click <a href='" + data.output + "'>here</a> to download the repository.");
+});
+
 /**
  *  Returns an object containing `x` and `y` fields that represent the
  *  point coordinates of the commit
@@ -93,45 +108,7 @@ $btnGenerateRepo.on("click", function () {
     // reset the progress value
     $(".progress-bar").css("width", "0");
 
-    // and make the ajax call
-    $.ajax({
-
-        // type post
-        type: "POST"
-
-        // to url
-      , url: "/get-zip"
-
-        // with data
-      , data: generated
-
-        // set content type: json
-      , contentType: "json"
-
-        // with data type: json
-      , dataType: "json"
-
-        // set the success handler
-      , success: function (data) {
-
-            // show the download link
-            $loadingText
-                .css("color", "green")
-                .html("Successfully generated repository. Click <a href='" + data.output + "'>here</a> to download the repository.");
-        }
-
-        // set the error handler
-      , error: function (data) {
-
-            // get the json response
-            data = data.responseJSON || {};
-
-            // and show message
-            $loadingText
-                .css("color", "red")
-                .text("Error: " + data.error).hide().show("slow");
-        }
-    });
+    socket.emit("getZip", generated);
 });
 
 // button import click handler
