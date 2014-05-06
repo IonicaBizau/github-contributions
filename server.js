@@ -6,7 +6,7 @@ var Statique = require ("statique")
   ;
 
 // set static server: public folder
-Statique.setStaticServer({root: __dirname + "/public"})
+Statique.server({root: __dirname + "/public"})
 Statique.setRoutes({"/": "/html/index.html"});
 
 /*
