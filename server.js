@@ -120,37 +120,41 @@ var io = require('socket.io').listen(server, {log: false});
 io.sockets.on('connection', function (client) {
     client.on ("getZip", function (clientData) {
 
-        debugger;
         if (client._generatingZip) {
-            // TODO Send error
-            return;
+            return client.emit("complete", {
+                error: "The generator already is generating a repository. If you are not patient, try to generate another in a new tab"
+            });
         }
-
-        client._generatingZip = true;
 
         // parse form data
         if (typeof clientData === "string") {
             try {
                 clientData = JSON.parse(clientData);
             } catch (e) {
-                // TODO Send error
-                return;
+                return client.emit("complete", {
+                    error: "Cannot parse request data"
+                });
             }
         }
 
         // validate form data
         if (clientData.constructor !== Object) {
-            //return sendResponse(req, res, "Invalid request data.", 400);
-                // TODO Send error
-            return;
+            return client.emit("complete", {
+                error: "Invalid request data"
+            });
         }
 
+        client._generatingZip = true;
         // generate repository
         Contributions.getRepo(clientData, function (err, repoLink) {
 
+            client._generatingZip = true;
             // handle error
-            // TODO send error
-            if (err) { return; }
+            if (err) {
+                return client.emit("complete", {
+                    error: err.text || err.toString() || err
+                });
+            }
 
             // prepare the repository download link
             repoLink = repoLink.substring(6);
