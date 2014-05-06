@@ -148,7 +148,7 @@ io.sockets.on('connection', function (client) {
         // generate repository
         Contributions.getRepo(clientData, function (err, repoLink) {
 
-            client._generatingZip = true;
+            client._generatingZip = false;
             // handle error
             if (err) {
                 return client.emit("complete", {
