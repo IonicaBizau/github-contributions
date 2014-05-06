@@ -66,7 +66,7 @@ $btnGenerate.on("click", function () {
 
     // get the dates
     var dates = [];
-    $(".active").each(function () {
+    $(".day.active").each(function () {
         dates.push(getDayPoint($(this)));
     });
 
