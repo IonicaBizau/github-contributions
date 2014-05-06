@@ -195,30 +195,13 @@ function runCommand (command, callback) {
     // default value for callback
     callback = callback || function () {};
 
-    // output
-    // console.log("> " + command.bold);
-
-    // executes `pwd`
-    var child = exec(command, function (error, stdout, stderr) {
-
-        // output
-        // sys.print('stdout: ' + stdout);
-        // sys.print('stderr: ' + stderr.red);
-        // we've got an error
-        if (error) {
-            debugger;
-            // output it
-            // TODO Callback?
-            console.log('exec error: '.red.bold + error.bold);
-        }
-    }).on("close", function (code) {
-
-        // output
-        // console.log("Close: ".bold + code);
-
-        // TODO err, data
-        callback ();
-    });
+    var error = null
+      , child = exec(command, function (error, stdout, stderr) {
+            error = stderr || null;
+        }).on("close", function (code) {
+            callback (error);
+        })
+      ;
 }
 
 /**
