@@ -1,7 +1,7 @@
 {
   "name": "github-contributions",
   "version": "0.1.0",
-  "description": "Repository generator that being added into your Github account creates a nice contributions graph.",
+  "description": "This is a generator that generates commits into a repository that being added into your Github account creates a nice contributions graph.",
   "main": "index.js",
   "repository": {
     "type": "git",
