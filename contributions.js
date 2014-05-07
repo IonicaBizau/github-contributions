@@ -112,9 +112,10 @@ module.exports = {
           ;
 
         // init repository
-        runCommand("sh " + __dirname + "/bin/create-repository.sh " + process.cwd() + " " + repoName, function () {
+        runCommand("sh " + __dirname + "/bin/create-repository.sh " + process.cwd() + " " + repoName, function (err) {
 
-            // TODO handle error
+            // handle error
+            if (err) { return callback (err); }
 
             // the current commit
             var id = 0;
@@ -126,7 +127,7 @@ module.exports = {
                 if (!date || isNaN(date)) {
 
                     // compress the directory
-                    runCommand("sh " + __dirname + "/bin/toZip.sh " + repoName, function (err) {
+                    runCommand("sh " + __dirname + "/bin/toZip.sh " + __dirname + "/" + repoName, function (err, out) {
 
                         // handle error
                         if (err) { return callback(err); }
@@ -196,10 +197,17 @@ function runCommand (command, callback) {
     callback = callback || function () {};
 
     var error = null
+      , output = null
       , child = exec(command, function (error, stdout, stderr) {
             error = stderr || null;
+            output = stdout;
         }).on("close", function (code) {
-            callback (error);
+
+            if (/error/i.test (output)) {
+                error = output;
+            }
+
+            callback (error, output);
         })
       ;
 }
