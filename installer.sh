@@ -12,8 +12,8 @@ wget https://github.com/IonicaBizau/gh-contributions/archive/master.zip || curl 
 
 echo "... unzipping"
 unzip master.zip
-mv gh-contributions-master/* ./
+mv github-contributions-master/* ./
 npm install
-rm -rf gh-contributions-master master.zip
+rm -rf github-contributions-master master.zip
 echo "Sucessfully installed. Please type: cd ~/gh-contributions"
 echo "Bye!"
