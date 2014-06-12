@@ -5,7 +5,7 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/IonicaBizau/gh-contributions.git"
+    "url": "git://github.com/IonicaBizau/github-contributions.git"
   },
   "keywords": [
     "contributions",
@@ -26,11 +26,11 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/IonicaBizau/gh-contributions/issues"
+    "url": "https://github.com/IonicaBizau/github-contributions/issues"
   },
   "scripts": {
     "start": "node server.js"
   },
-  "homepage": "https://github.com/IonicaBizau/gh-contributions",
+  "homepage": "https://github.com/IonicaBizau/github-contributions",
   "devDependencies": {}
 }
