@@ -55,25 +55,61 @@ function getDayAtPoint(point) {
     return $("g").eq(point.x - 1).children(".day").eq(point.x - 1);
 }
 
-// .day click handler
-$(document).on("click", ".day", function () {
+function activateDay($day) {
+    $day.attr("class", function (index, classNames) {
+        return classNames + " active";
+    });
+}
+function deactivateDay($day) {
+    $day.attr("class", function (index, classNames) {
+        return classNames.replace("active",  "");
+    });
+}
 
-    // get the clicked day
-    var $thisDay = $(this);
+function isDayDisabled($day) {
+  return $day.attr("class").indexOf('disabled') !== -1;
+}
 
+function tryToggleDay($day) {
     // return if the day is disabled
-    if ($thisDay.attr("class").indexOf('disabled') !== -1) { return; }
+    if (isDayDisabled($day)) { return; }
 
     // toggle class active
-    if ($thisDay.attr("class").indexOf("active") !== -1) {
-        $thisDay.attr("class", function (index, classNames) {
-            return classNames.replace("active",  "");
-        });
+    if ($day.attr("class").indexOf("active") !== -1) {
+        deactivateDay($day);
     } else {
-        $thisDay.attr("class", function (index, classNames) {
-            return classNames + " active";
-        });
+        activateDay($day);
     }
+}
+
+// Deactivate tooltips if the smooth painting/erasure mode has been activated
+// and vice versa
+$(document).on("keydown keyup", function (evt) {
+    if (evt.shiftKey || evt.ctrlKey) {
+        $(".day").tooltip('disable');
+    }
+    else {
+        $(".day").tooltip('enable');
+    }
+});
+
+$(document).on("mouseenter", ".day", function (evt) {
+    $day = $(this);
+    if (isDayDisabled($day)) {
+        return;
+    }
+
+    if (evt.shiftKey) {
+      activateDay($day);
+    }
+    else if (evt.ctrlKey) {
+      deactivateDay($day);
+    }
+});
+
+// .day click handler
+$(document).on("click", ".day", function () {
+    tryToggleDay($(this));
 });
 
 // generate click handler
