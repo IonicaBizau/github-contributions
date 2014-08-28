@@ -18,7 +18,7 @@ Usage
 The installer script will create a folder in `home` called `github-contributions`. So enter in that folder (`cd ~/github-contributions`) and run `node server` or directly:
 
 ```
-node ~/github-contributions/server.js
+$ cd ~/github-contributions && node server.js
 ```
 
 The application runs on the port `9000`. Open your browser at `http://localhost:9000/` there you will see the contribution designer. You will draw the commits. A JSON object is generated:
