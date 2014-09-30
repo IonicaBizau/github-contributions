@@ -15,5 +15,5 @@ unzip master.zip
 mv github-contributions-master/* ./
 npm install
 rm -rf github-contributions-master master.zip
-echo "Sucessfully installed. Please type: cd ~/github-contributions"
+echo "Sucessfully installed. Please type: cd ~/github-contributions; node server.js"
 echo "Bye!"
