@@ -6,8 +6,8 @@ var Statique = require ("statique")
   ;
 
 // set static server: public folder
-Statique.server({root: __dirname + "/public"})
-Statique.setRoutes({"/": "/html/index.html"});
+var ghc_server = new Statique({root: __dirname + "/public"})
+ghc_server.setRoutes({"/": "/html/index.html"});
 
 /*
  *  Returns the form data
@@ -109,7 +109,7 @@ var server = http.createServer(function(req, res) {
 
 
     // serve files
-    Statique.serve (req, res);
+    ghc_server.serve (req, res);
 }).listen(9000);
 console.log("Listening on 9000");
 
