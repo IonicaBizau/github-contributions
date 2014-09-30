@@ -13,10 +13,10 @@
     "git"
   ],
   "dependencies": {
-    "colors": "*",
-    "statique": "*",
-    "underscore": "*",
-    "socket.io": "*"
+    "colors": "0.6.2",
+    "statique": "0.4.0",
+    "underscore": "1.7.0",
+    "socket.io": "1.1.0"
   },
   "author": "Ionică Bizău <bizauionica@gmail.com>",
   "contributors": [
