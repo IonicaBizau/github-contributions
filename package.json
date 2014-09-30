@@ -13,17 +13,17 @@
     "git"
   ],
   "dependencies": {
-    "colors": "*",
-    "statique": "*",
-    "underscore": "*",
-    "socket.io": "*"
+    "socket.io": "1.1.0",
+    "statique": "0.4.0",
+    "underscore": "1.7.0"
   },
   "author": "Ionică Bizău <bizauionica@gmail.com>",
   "contributors": [
     "Ionică Bizău <bizauionica@gmail.com>",
     "Silviu Bogan <silviubogan@gmail.com>",
     "Guilherme Sad <gorgulhoguilherme@gmail.com>",
-    "ComFreek <comfreek@outlook.com>"
+    "ComFreek <comfreek@outlook.com>",
+    "Adrian Moisey <adrian@changeover.za.net>"
   ],
   "license": "MIT",
   "bugs": {
