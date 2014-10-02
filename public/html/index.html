@@ -8,11 +8,11 @@
     <body>
         <div class="container">
             <h1>Github Contributions</h1>
-            <div class="github-html">
+            <div class="contributions-calendar">
                 <div class="box box-small">
                     <div class="box-header">
                           <h3 class="box-title">
-                            Your Contributions
+                              Calendar
                           </h3>
                     </div>
                     <div class="box-body">
@@ -501,20 +501,51 @@
                                     </g>
                                 </svg>
                             </div>
-                            Activate smooth painting mode by holding down <kbd>Shift</kbd>.<br>
-                            Activate smooth erasure mode by holding down <kbd>Ctrl</kbd>.
+                            <p>
+                                Activate smooth painting mode by holding down <kbd>Shift</kbd>.<br>
+                                Activate smooth erasure mode by holding down <kbd>Ctrl</kbd>.
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
-            <textarea class="gh-generated"></textarea>
+            <div class="contributions-data">
+                <div class="box box-small">
+                    <div class="box-header">
+                          <h3 class="box-title">
+                              Data
+                          </h3>
+                    </div>
+                    <div class="box-body">
+                        <!-- DATA -->
+                        <textarea class="gh-generated"></textarea>
+                        <p>
+                            Enter a JSON object containing keys:
+                            <ul>
+                                <li>
+                                    <code>coordinates</code>: an array of points
+                                    containing keys <code>x</code> and <code>y</code>
+                                </li>
+                                <li>
+                                    <code>commitsPerDay</code>: a number.
+                                </li>
+                            </ul>
+                            Or, use the buttons below to generate the data.
+                        </p>
+                    </div>
+                </div>
+            </div>
             <div class="progress progress-striped active">
                 <div class="progress-bar"  role="progressbar" aria-valuemax="100">
                 </div>
             </div>
-            <button class="btn btn-primary btn-generate"> Generate data </button>
-            <button class="btn btn-warning btn-import"> Import </button>
-            <button class="btn btn-primary btn-generate-repo"> Generate repository from data </button>
+            <div class="controls">
+                <button class="btn btn-primary btn-generate"> Generate data from calendar </button>
+                <button class="btn btn-warning btn-generate-repo"> Generate repository from data </button>
+            </div>
+            <div class="controls">
+                <button class="btn btn-primary btn-toggle"> Toggle calendar days from data </button>
+            </div>
             <span id="loading-text"></span>
         </div>
     </body>

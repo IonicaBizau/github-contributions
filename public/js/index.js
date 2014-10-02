@@ -2,7 +2,7 @@
 var $btnGenerate        = $(".btn-generate")
   , $btnGenerateRepo    = $(".btn-generate-repo")
   , $loadingText        = $("#loading-text")
-  , $btnImport          = $(".btn-import")
+  , $btnToggle          = $(".btn-toggle")
   , $ghGenerated        = $(".gh-generated")
   , $days               = null
   , socket              = io.connect();
@@ -147,8 +147,8 @@ $btnGenerateRepo.on("click", function () {
     socket.emit("getZip", generated);
 });
 
-// button import click handler
-$btnImport.on("click", function () {
+// button toggle click handler
+$btnToggle.on("click", function () {
 
     // get the generated array and get all days
     var generated = $ghGenerated.val();

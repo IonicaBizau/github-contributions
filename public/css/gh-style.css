@@ -32,3 +32,18 @@ textarea {
     font-weight: bold;
     padding-top: 2px;
 }
+
+.box {
+    margin: 12px 0;
+}
+.box-body {
+    padding: 0 12px;
+}
+
+.controls {
+    margin: 5px 0 16px 0;
+}
+.controls .btn, .controls input {
+    width: 240px;
+    margin-right: 8px;
+}
