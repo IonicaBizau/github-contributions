@@ -3,6 +3,7 @@ var $btnGenerate        = $(".btn-generate")
   , $btnGenerateRepo    = $(".btn-generate-repo")
   , $loadingText        = $("#loading-text")
   , $btnToggle          = $(".btn-toggle")
+  , $btnClear           = $(".btn-clear")
   , $ghGenerated        = $(".gh-generated")
   , $days               = null
   , socket              = io.connect();
@@ -175,6 +176,14 @@ $btnToggle.on("click", function () {
                 $day.click();
             }
         }
+    });
+});
+
+// clear calendar click handler
+$btnClear.on("click", function () {
+
+    $days.each(function () {
+        deactivateDay($(this));
     });
 });
 
