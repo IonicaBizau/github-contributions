@@ -156,7 +156,9 @@ $btnToggle.on("click", function () {
 
     try {
         var coordinates = JSON.parse(generated).coordinates;
-    } catch (e) { return alert(e.message); }
+    } catch (e) {
+        return alert('Error: ' + e.message + '.  Ensure JSON data is loaded.');
+    }
 
     // each day
     $days.each(function () {
