@@ -1,6 +1,8 @@
 // jQuery elements
 var $btnGenerate        = $(".btn-generate")
   , $btnGenerateRepo    = $(".btn-generate-repo")
+  , $btnGenerateText    = $(".btn-generate-text")
+  , $generateText       = $(".generate-text")
   , $loadingText        = $("#loading-text")
   , $btnToggle          = $(".btn-toggle")
   , $btnClear           = $(".btn-clear")
@@ -141,6 +143,43 @@ $btnGenerateRepo.on("click", function () {
     $(".progress-bar").css("width", "0");
 
     socket.emit("getZip", generated);
+});
+
+// generate data from text click handler
+$btnGenerateText.on("click", function () {
+
+    // get the user's text
+    var text = $generateText.val();
+
+    // coordinates of pixels to set
+    var coordinates = [];
+
+    // store the current x position
+    var x = 3
+      , xMax = 0
+      ;
+
+    for (var i = 0; i < text.length; i++) {
+        var c = text.charCodeAt(i);
+        if (pixelFont[c]) {
+            $.each(pixelFont[c].data, function(_, point) {
+                xMax = Math.max(xMax, x + point.x);
+                coordinates.push({
+                    x : x + point.x,
+                    y : 2 + point.y
+                });
+            });
+            x += pixelFont[c].width;
+        }
+    }
+
+    if (xMax > 52) {
+        alert('Warning: Text extends to week ' + xMax
+            + '; longest recommended extent is 52.');
+    }
+
+    // stringify the data
+    $ghGenerated.val(generateData(coordinates));
 });
 
 // button toggle click handler
