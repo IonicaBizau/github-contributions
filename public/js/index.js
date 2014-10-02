@@ -123,12 +123,7 @@ $btnGenerate.on("click", function () {
     });
 
     // stringify the dates
-    $ghGenerated.val(
-        JSON.stringify({
-            coordinates: dates
-          , commitsPerDay: 2
-        }, null, 4)
-    );
+    $ghGenerated.val(generateData(dates));
 });
 
 // generate repository click handler
@@ -262,6 +257,30 @@ $(function () {
         container: "body"
     });
 });
+
+/**
+ *  Generates nicely-formatted JSON data from coordinates.
+ *
+ */
+function generateData(coordinates) {
+    var lines = [
+        '{',
+        '    "coordinates": ['
+    ];
+
+    for (var i = 0; i < coordinates.length; i++) {
+        var c = coordinates[i];
+        lines.push('        { "x": ' + c.x
+            + ', "y": ' + c.y
+            + (i == coordinates.length - 1 ? ' }' : ' },'));
+    }
+
+    lines.push('    ],');
+    lines.push('    "commitsPerDay": 2');
+    lines.push('}');
+
+    return lines.join('\n');
+}
 
 /**
  *  Adds `0` to stringified number if this is needed
