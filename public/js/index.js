@@ -1,8 +1,11 @@
 // jQuery elements
 var $btnGenerate        = $(".btn-generate")
   , $btnGenerateRepo    = $(".btn-generate-repo")
+  , $btnGenerateText    = $(".btn-generate-text")
+  , $generateText       = $(".generate-text")
   , $loadingText        = $("#loading-text")
-  , $btnImport          = $(".btn-import")
+  , $btnToggle          = $(".btn-toggle")
+  , $btnClear           = $(".btn-clear")
   , $ghGenerated        = $(".gh-generated")
   , $days               = null
   , socket              = io.connect();
@@ -122,12 +125,7 @@ $btnGenerate.on("click", function () {
     });
 
     // stringify the dates
-    $ghGenerated.val(
-        JSON.stringify({
-            coordinates: dates
-          , commitsPerDay: 2
-        }, null, 4)
-    );
+    $ghGenerated.val(generateData(dates));
 });
 
 // generate repository click handler
@@ -147,15 +145,54 @@ $btnGenerateRepo.on("click", function () {
     socket.emit("getZip", generated);
 });
 
-// button import click handler
-$btnImport.on("click", function () {
+// generate data from text click handler
+$btnGenerateText.on("click", function () {
+
+    // get the user's text
+    var text = $generateText.val();
+
+    // coordinates of pixels to set
+    var coordinates = [];
+
+    // store the current x position
+    var x = 3
+      , xMax = 0
+      ;
+
+    for (var i = 0; i < text.length; i++) {
+        var c = text.charCodeAt(i);
+        if (pixelFont[c]) {
+            $.each(pixelFont[c].data, function(_, point) {
+                xMax = Math.max(xMax, x + point.x);
+                coordinates.push({
+                    x : x + point.x,
+                    y : 2 + point.y
+                });
+            });
+            x += pixelFont[c].width;
+        }
+    }
+
+    if (xMax > 52) {
+        alert('Warning: Text extends to week ' + xMax
+            + '; longest recommended extent is 52.');
+    }
+
+    // stringify the data
+    $ghGenerated.val(generateData(coordinates));
+});
+
+// button toggle click handler
+$btnToggle.on("click", function () {
 
     // get the generated array and get all days
     var generated = $ghGenerated.val();
 
     try {
         var coordinates = JSON.parse(generated).coordinates;
-    } catch (e) { return alert(e.message); }
+    } catch (e) {
+        return alert('Error: ' + e.message + '.  Ensure JSON data is loaded.');
+    }
 
     // each day
     $days.each(function () {
@@ -175,6 +212,14 @@ $btnImport.on("click", function () {
                 $day.click();
             }
         }
+    });
+});
+
+// clear calendar click handler
+$btnClear.on("click", function () {
+
+    $days.each(function () {
+        deactivateDay($(this));
     });
 });
 
@@ -251,6 +296,30 @@ $(function () {
         container: "body"
     });
 });
+
+/**
+ *  Generates nicely-formatted JSON data from coordinates.
+ *
+ */
+function generateData(coordinates) {
+    var lines = [
+        '{',
+        '    "coordinates": ['
+    ];
+
+    for (var i = 0; i < coordinates.length; i++) {
+        var c = coordinates[i];
+        lines.push('        { "x": ' + c.x
+            + ', "y": ' + c.y
+            + (i == coordinates.length - 1 ? ' }' : ' },'));
+    }
+
+    lines.push('    ],');
+    lines.push('    "commitsPerDay": 2');
+    lines.push('}');
+
+    return lines.join('\n');
+}
 
 /**
  *  Adds `0` to stringified number if this is needed
