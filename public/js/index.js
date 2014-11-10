@@ -302,23 +302,10 @@ $(function () {
  *
  */
 function generateData(coordinates) {
-    var lines = [
-        '{',
-        '    "coordinates": ['
-    ];
-
-    for (var i = 0; i < coordinates.length; i++) {
-        var c = coordinates[i];
-        lines.push('        { "x": ' + c.x
-            + ', "y": ' + c.y
-            + (i == coordinates.length - 1 ? ' }' : ' },'));
-    }
-
-    lines.push('    ],');
-    lines.push('    "commitsPerDay": 2');
-    lines.push('}');
-
-    return lines.join('\n');
+    return JSON.stringify({
+        coordinates: coordinates,
+        commitsPerDay: 2
+    }, null, 4);
 }
 
 /**
