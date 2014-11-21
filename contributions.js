@@ -69,7 +69,12 @@ module.exports = {
         for (var i = 0; i < 366; ++i) {
 
             // get the unix stamp
-            var unixStamp = dateObj.getTime() / 1000;
+            if (dateObj < new Date(2014, 2, 10)) { // Before Mar 10, 2014, GitHub treats commit date in UTC−08:00 timezone.
+              var timezoneOffset = -8 * 60 + dateObj.getTimezoneOffset();
+              var unixStamp = dateObj.getTime() / 1000 - timezoneOffset * 60;
+            } else {
+              var unixStamp = dateObj.getTime() / 1000;
+            }
 
             // set the unix stamp in the current day
             week[dateObj.getDay()] = {
