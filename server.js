@@ -2,12 +2,14 @@
 var Contributions = require("./contributions")
   , Lien = require("lien");
   , SocketIO = require("socket.io")
+  , ClientHandlers = require("./lib")
   ;
 
 // Init lien server
-var server = new Lien({
+var app = new Lien({
     host: "localhost"
   , port: 9000
+  , root: _dirname + "/public"
 });
 
 // Add page
@@ -15,14 +17,12 @@ server.page.add("/", function (lien) {
     lien.file("/html/index.html");
 });
 
-console.log("Listening on 9000");
-
 // Socket.io server listens to our app
 var io = SocketIO.listen(server._server, { log: false });
 
-// listen for connections
-io.sockets.on('connection', function (client) {
-    client.on ("getZip", function (clientData) {
+// Listen for connections
+io.sockets.on("connection", function (client) {
+    client.on("getZip", function (clientData) {
 
         if (client._generatingZip) {
             return client.emit("complete", {
@@ -77,3 +77,5 @@ io.sockets.on('connection', function (client) {
         });
     });
 });
+
+console.log("Listening on 9000");
