@@ -13,8 +13,7 @@
     "git"
   ],
   "dependencies": {
-    "socket.io": "1.1.0",
-    "underscore": "1.7.0",
+    "socket.io": "1.2.1",
     "lien": "0.0.7"
   },
   "author": "Ionică Bizău <bizauionica@gmail.com>",
