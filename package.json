@@ -1,6 +1,6 @@
 {
   "name": "github-contributions",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "This is a generator that generates commits into a repository that being added into your Github account creates a nice contributions graph.",
   "main": "index.js",
   "repository": {
@@ -12,10 +12,6 @@
     "github",
     "git"
   ],
-  "dependencies": {
-    "socket.io": "1.2.1",
-    "lien": "0.0.7"
-  },
   "author": "Ionică Bizău <bizauionica@gmail.com>",
   "contributors": [
     "Ionică Bizău <bizauionica@gmail.com>",
@@ -34,5 +30,12 @@
     "start": "node server.js"
   },
   "homepage": "https://github.com/IonicaBizau/github-contributions",
-  "devDependencies": {}
+  "devDependencies": {},
+  "dependencies": {
+    "archiver": "^0.13.1",
+    "gry": "^1.0.0",
+    "lien": "^0.0.7",
+    "ul": "^1.1.0",
+    "socket.io": "^1.1.0"
+  }
 }
