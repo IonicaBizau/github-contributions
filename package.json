@@ -14,8 +14,8 @@
   ],
   "dependencies": {
     "socket.io": "1.1.0",
-    "statique": "0.4.0",
-    "underscore": "1.7.0"
+    "underscore": "1.7.0",
+    "lien": "0.0.7"
   },
   "author": "Ionică Bizău <bizauionica@gmail.com>",
   "contributors": [
