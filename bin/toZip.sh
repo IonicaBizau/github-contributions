@@ -7,7 +7,7 @@ This repository was generated with [GitHub Contributions](https://github.com/Ion
 EOF
 
 git add .
-git commit -m 'Added title and description (cc. @IonicaBizau)'
+git commit -m ''
 
 # now, zip the file
 zip -r $1.zip $1
