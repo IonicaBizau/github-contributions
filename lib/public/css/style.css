@@ -1,5 +1,5 @@
-@import url("../bootstrap/css/bootstrap.min.css");
 @import url("./github.css");
+@import url("./caiuss.css");
 
 html, body { overflow-x: hidden; }
 textarea {
