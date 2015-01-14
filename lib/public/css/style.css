@@ -1,16 +1,17 @@
 @import url("./github.css");
 @import url("./caiuss.css");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/octicons/2.1.2/octicons.min.css");
 
 html, body { overflow-x: hidden; }
 textarea {
-    width: 100%;
+    width: calc(100% - 25px);
     resize: vertical;
 }
 
 .gh-generated {
     margin: 20px 0;
     height: 200px !important;
-    font-family: monospace;
+    font-family: Monaco, monospace;
 }
 
 .active { fill: green !important; }
@@ -44,6 +45,19 @@ textarea {
     margin: 5px 0 16px 0;
 }
 .controls .btn, .controls input {
-    width: 240px;
     margin-right: 8px;
+}
+
+kbd {
+    background-color: #e7e7e7;
+    background-image: -webkit-linear-gradient(#fefefe, #e7e7e7);
+    background-image: linear-gradient(#fefefe, #e7e7e7);
+    background-repeat: repeat-x;
+    border-radius: 2px;
+    border: 1px solid #cfcfcf;
+    color: #000;
+    padding: 3px 5px;
+    line-height: 10px;
+    font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    display: inline-block;
 }
