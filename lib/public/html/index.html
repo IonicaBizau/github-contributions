@@ -7,7 +7,7 @@
     </head>
     <body>
         <div class="container">
-            <h1 class="text-center">Github Contributions</h1>
+            <h1 class="text-center"><span class="octicon octicon-mark-github"></span> Github Contributions</h1>
             <div class="contributions-calendar">
                 <div class="box box-small">
                     <div class="box-header">
@@ -518,7 +518,18 @@
                     <span class="octicon octicon-x"></span>
                     Clear calendar
                 </button>
+                <button class="btn bg-white btn-toggle">
+                    <span class="octicon octicon-eye"></span>
+                    Toggle calendar days from data
+                </button>
             </div>
+            <div>
+                <button class="btn bg-green btn-generate-repo">
+                    <span class="octicon octicon-repo"></span>
+                    Generate repository from data
+                </button>
+            </div>
+            <div id="loading-text" class="text-center btn bg-white"></div>
             <div class="contributions-data">
                 <div class="box box-small">
                     <div class="box-header">
@@ -545,28 +556,13 @@
                         <p>
                             <input type="text" class="generate-text form-elm" placeholder="Enter text here">
                             <button class="btn bg-blue btn-generate-text">
-                                <span class="octicon octicon-arrow-down"></span>
+                                <span class="octicon octicon-arrow-up"></span>
                                 Generate data from text
                             </button>
                         </p>
                     </div>
                 </div>
             </div>
-            <div class="progress progress-striped active">
-                <div class="progress-bar"  role="progressbar" aria-valuemax="100">
-                </div>
-            </div>
-            <div class="controls">
-                <button class="btn btn-primary btn-generate"> Generate data from calendar </button>
-                <button class="btn btn-warning btn-generate-repo"> Generate repository from data </button>
-            </div>
-            <div class="controls">
-            </div>
-            <div class="controls">
-                <button class="btn btn-primary btn-toggle"> Toggle calendar days from data </button>
-                <button class="btn btn-primary btn-clear"> Clear calendar </button>
-            </div>
-            <span id="loading-text"></span>
         </div>
     </body>
     <script src="js/jquery.min.js"></script>
