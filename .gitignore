@@ -1,5 +1,5 @@
-*~
 *.swp
-/node_modules
-/generated-repo
-test.json
+*.swo
+*~
+*.log
+node_modules
