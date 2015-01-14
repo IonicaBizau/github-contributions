@@ -501,13 +501,23 @@
                                     </g>
                                 </svg>
                             </div>
-                            <p>
+                            <p class="text-center">
                                 Activate smooth painting mode by holding down <kbd>Shift</kbd>.<br>
                                 Activate smooth erasure mode by holding down <kbd>Ctrl</kbd>.
                             </p>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="controls">
+                <button class="btn bg-blue btn-generate">
+                    <span class="octicon octicon-arrow-down"></span>
+                    Generate data from calendar
+                </button>
+                <button class="btn bg-red btn-clear">
+                    <span class="octicon octicon-x"></span>
+                    Clear calendar
+                </button>
             </div>
             <div class="contributions-data">
                 <div class="box box-small">
@@ -518,7 +528,7 @@
                     </div>
                     <div class="box-body">
                         <!-- DATA -->
-                        <textarea class="gh-generated"></textarea>
+                        <textarea class="gh-generated form-elm"></textarea>
                         <p>
                             Enter a JSON object containing keys:
                             <ul>
@@ -532,6 +542,13 @@
                             </ul>
                             Or, use the buttons below to generate the data.
                         </p>
+                        <p>
+                            <input type="text" class="generate-text form-elm" placeholder="Enter text here">
+                            <button class="btn bg-blue btn-generate-text">
+                                <span class="octicon octicon-arrow-down"></span>
+                                Generate data from text
+                            </button>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -544,8 +561,6 @@
                 <button class="btn btn-warning btn-generate-repo"> Generate repository from data </button>
             </div>
             <div class="controls">
-                <input type="text" class="generate-text" placeholder="ENTER TEXT HERE">
-                <button class="btn btn-primary btn-generate-text"> Generate data from text </button>
             </div>
             <div class="controls">
                 <button class="btn btn-primary btn-toggle"> Toggle calendar days from data </button>
