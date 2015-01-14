@@ -5,7 +5,7 @@
         <title>Github Contributions</title>
         <link href="css/style.css" rel="stylesheet">
     </head>
-    <body>
+    <body class="bg-white">
         <div class="container">
             <h1 class="text-center"><span class="octicon octicon-mark-github"></span> Github Contributions</h1>
             <div class="contributions-calendar">
@@ -561,6 +561,34 @@
                             </button>
                         </p>
                     </div>
+                </div>
+            </div>
+            <div class="box box-small">
+                <div class="box-header">
+                      <h3 class="box-title">
+                          Help
+                      </h3>
+                </div>
+                <div class="box-body">
+                    <h3>Design your calendar</h3>
+                    <p>Click the day elements you want to have contributions. They will become green. If you want to activate smooth drawing, press
+                        <kbd>Shift</kbd> and hover the day elements. To clear them, click them again or activate clearing with hovering, holding
+                        the <kbd>Ctrl</kbd> key.</p>
+                    <p>If you want to insert a text, that's even easier: insert your text in the textbox above, and click the <kbd>Generate data from text</kbd> button.
+                        Then to preview the generating JSON click the <kbd>Toggle calendar days from data</kbd> button.</p>
+                    <h3>Generating the repository</h3>
+                    <p>Once you are ready and happy with the graph calendar you designed, press the <kbd>Generate data from calendar</kbd> button and then
+                        </kbd>Generate repository from data</kbd>.</p>
+                    <h3>Pushing the repository on GitHub</h3>
+                    <p>Once the repository is generated, download the zip archive clicking the download link.
+                        <ol>
+                            <li>Unzip the archive</li>
+                            <li>Create an empty reposotry on GitHub.</li>
+                            <li>Add the remote to your downloaded and unzipped repository.</li>
+                            <li>Do <code>git push --all</code></li>
+                            <li>Enjoy!</li>
+                        </ol>
+                    </p>
                 </div>
             </div>
             <p class="text-center copyright">
