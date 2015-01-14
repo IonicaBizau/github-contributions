@@ -6,7 +6,6 @@ account creates a nice contributions calendar.
 ![](http://i.imgur.com/CWSu6vm.png)
 
 ## Installation
-
 ### Global installation
 
 [Ensure you configured NPM and NodeJS not to require `sudo` when installing
@@ -58,14 +57,3 @@ if you want to have more contributions per day.</p>
         <li>Enjoy!</li>
     </ol>
 </p>
-
-Example
--------
-
-Design your GitHub contributions calendar using the designer from the browser:
-
-![](http://i.imgur.com/n5gjb0T.png)
-
-A repo will be generated. After pushing it to GitHub, your profile will look like this:
-
-![](http://i.imgur.com/Z8c1Ed0.png)
