@@ -62,8 +62,11 @@ kbd {
     width: 100%;
 }
 
-#loading-text > a:hover {
+#loading-text > a:hover, .copyright > a:hover {
     color: #3498db;
+}
+
+#loading-text > a:hover {
     text-decoration: underline;
 }
 
