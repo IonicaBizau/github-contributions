@@ -1,8 +1,8 @@
 {
-  "name": "github-contributions",
-  "version": "1.0.0",
-  "description": "This is a generator that generates commits into a repository that being added into your Github account creates a nice contributions graph.",
-  "main": "index.js",
+  "name": "gh-contributions",
+  "version": "1.0.0-beta",
+  "description": "A tool that generates a repository which being pushed into your GitHub account creates a nice contributions calendar.",
+  "main": "lib/server.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/IonicaBizau/github-contributions.git"
@@ -12,6 +12,10 @@
     "github",
     "git"
   ],
+  "bin": "./lib/server.js",
+  "scripts": {
+    "start": "./lib/server.js"
+  },
   "author": "Ionică Bizău <bizauionica@gmail.com>",
   "contributors": [
     "Ionică Bizău <bizauionica@gmail.com>",
@@ -25,9 +29,6 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/IonicaBizau/github-contributions/issues"
-  },
-  "scripts": {
-    "start": "node server.js"
   },
   "homepage": "https://github.com/IonicaBizau/github-contributions",
   "devDependencies": {},
