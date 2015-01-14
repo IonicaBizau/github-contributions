@@ -29,23 +29,11 @@ textarea {
     opacity: 0;
 }
 
-.progress-bar {
-    font-weight: bold;
-    padding-top: 2px;
-}
-
 .box {
     margin: 12px 0;
 }
 .box-body {
     padding: 0 12px;
-}
-
-.controls {
-    margin: 5px 0 16px 0;
-}
-.controls .btn, .controls input {
-    margin-right: 8px;
 }
 
 kbd {
@@ -60,4 +48,29 @@ kbd {
     line-height: 10px;
     font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
     display: inline-block;
+}
+
+.controls > .btn {
+    width: 32.83%;
+}
+
+.controls > .btn:last-of-type {
+    margin-right: 0;
+}
+
+.btn-generate-repo {
+    width: 100%;
+}
+
+#loading-text > a:hover {
+    color: #3498db;
+    text-decoration: underline;
+}
+
+#loading-text > a {
+    color: #3498db;
+}
+
+span.octicon {
+    font-size: inherit;
 }
