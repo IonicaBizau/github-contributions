@@ -21,6 +21,13 @@ To start the GitHub contributions server, do:
 $ gh-contributions
 ```
 
+#### Notes for installing on Windows
+For this application to work well on Windows, Git must be installed with the option to put it in `PATH` enabled, like in this screenshot:
+
+![](http://i.imgur.com/UOkx35j.png)
+
+If Git is not installed with this option selected, *gh-contributions* will not be able to generate the repository.
+
 ### Local installation
 ```js
 $ git clone git@github.com:IonicaBizau/github-contributions.git
