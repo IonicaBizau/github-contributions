@@ -3,7 +3,7 @@ GitHub Contributions
 A tool that generates a repository which being pushed into your GitHub
 account creates a nice contributions calendar.
 
-![](http://i.imgur.com/w6nVEgj.png)
+![Screenshot](http://i.imgur.com/w6nVEgj.png)
 
 ## Installation
 ### Global installation
