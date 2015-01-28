@@ -1,6 +1,6 @@
 {
   "name": "gh-contributions",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A tool that generates a repository which being pushed into your GitHub account creates a nice contributions calendar.",
   "main": "lib/server.js",
   "repository": {
