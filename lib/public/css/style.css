@@ -14,10 +14,10 @@ textarea {
     font-family: Monaco, monospace;
 }
 
-.active { fill: green !important; }
-.day { fill: #eeeeee; }
+.active { fill: #27ae60 !important; }
+.day { fill: #ecf0f1; }
 .today {
-    fill: darkgray;
+    fill: #bdc3c7;
 }
 
 #loading-text {
