@@ -62,6 +62,16 @@ if you want to have more contributions per day.</p>
         <li>Enjoy!</li>
     </ol>
 </p>
+<h3>Delete the graph calendar</h3>
+<p>If you want or need to delete the graph calendar, simply delete the repository.
+    <ol>
+      <li>Go to the settings page of your repository.</li>
+      <li>Click <kbd>Delete this repository</kbd>.</li>
+      <li>Confirm the name of the repository.</li>
+    </ol>
+</p>
+<h3>Update the graph calendar</h3>
+<p>To add new things on the contributions calendar, simply create new repositories which will create graphs to overlap the others.</p>
 
 ## How to contribute
 1. File an issue in the repository, using the bug tracker, describing the
