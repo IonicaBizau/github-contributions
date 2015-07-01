@@ -56,7 +56,7 @@ if you want to have more contributions per day.</p>
 <p>Once the repository is generated, download the zip archive clicking the download link.
     <ol>
         <li>Unzip the archive</li>
-        <li>Create an empty reposotry on GitHub.</li>
+        <li>Create an empty repository on GitHub.</li>
         <li>Add the remote to your downloaded and unzipped repository.</li>
         <li>Do <code>git push --all</code></li>
         <li>Enjoy!</li>
