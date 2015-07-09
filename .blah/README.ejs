@@ -13,9 +13,31 @@
 <!-- * * * Thanks! * * *                                                    -->
 <!---------------------------------------------------------------------------->
 
-# gh-contributions [![Donate now][donate-now]][paypal-donations]
 
-A tool that generates a repository which being pushed into your GitHub account creates a nice contributions calendar.
+<% // Dependencies %>
+<% var IsThere = require("is-there"); %>
+<% var Fs = require("fs"); %>
+<% var Path = require("path"); %>
+<% var Ul = require("ul"); %>
+
+<% // Compute the directory paths %>
+<% var binPath = Path.join(_.path, "bin"); %>
+<% var examplesPath = Path.join(_.path, "examples"); %>
+<% var examplePath = Path.join(_.path, "example"); %>
+<% var example = IsThere(examplePath) ? examplePath : IsThere(examplesPath) ? examplesPath : null; %>
+<% var isCli = IsThere(binPath); %>
+
+<% if (_.pack.blah.h_img) { %>
+![<%- _.pack.name %>](<%- _.pack.blah.h_img %>)
+<% } %>
+
+<% // Create the name and description %>
+<% if (isCli) { %>
+# `$ <%- _.pack.name %>` [![Donate now][donate-now]][paypal-donations]
+<% } else { %>
+# <%- _.pack.name %> [![Donate now][donate-now]][paypal-donations]
+<% } %>
+<%- _.pack.description %>
 
 ![Screenshot](http://i.imgur.com/w6nVEgj.png)
 
@@ -87,13 +109,16 @@ if you want to have more contributions per day.</p>
 <h3>Update the graph calendar</h3>
 <p>To add new things on the contributions calendar, simply create new repositories which will create graphs to overlap the others.</p>
 
+<% // How to contribute %>
 ## How to contribute
 Have an idea? Found a bug? See [how to contribute][contributing].
 
+<% // License information %>
 ## License
 [KINDLY][license] © [Ionică Bizău][website]–The [LICENSE](/LICENSE) file contains
 a copy of the license.
 
+<% // Links %>
 [license]: http://ionicabizau.github.io/kindly-license/?author=Ionic%C4%83%20Biz%C4%83u%20%3Cbizauionica@gmail.com%3E&year=2015
 [contributing]: /CONTRIBUTING.md
 [website]: http://ionicabizau.net
