@@ -16,7 +16,7 @@
   "scripts": {
     "start": "./lib/server.js"
   },
-  "author": "Ionică Bizău <bizauionica@gmail.com>",
+  "author": "Ionică Bizău <bizauionica@gmail.com> (http://ionicabizau.net)",
   "contributors": [
     "Ionică Bizău <bizauionica@gmail.com>",
     "Silviu Bogan <silviubogan@gmail.com>",
@@ -38,5 +38,72 @@
     "lien": "0.0.11",
     "socket.io": "^1.1.0",
     "ul": "^5.0.0"
+  },
+  "blah": {
+    "h_img": "http://i.imgur.com/w6nVEgj.png",
+    "show_installation": false,
+    "installation": [
+      {
+        "h2": "Installation"
+      },
+      {
+        "h3": "Global installation"
+      },
+      {
+        "p": "[Ensure you configured NPM and NodeJS not to require `sudo` when installing packages globally](https://github.com/IonicaBizau/dotfiles#npm-config)."
+      },
+      {
+        "code": {
+          "language": "js",
+          "content": "$ npm i -g gh-contributions"
+        }
+      },
+      {
+        "p": "To start the GitHub contributions server, do:"
+      },
+      {
+        "code": {
+          "language": "js",
+          "content": "$ gh-contributions"
+        }
+      },
+      {
+        "h3": "Notes for installing on Windows"
+      },
+      {
+        "p": "For this application to work well on Windows, Git must be installed with the option to put it in `PATH` enabled, like in this screenshot:"
+      },
+      {
+        "img": {
+          "source": "http://i.imgur.com/UOkx35j.png"
+        }
+      },
+      {
+        "p": "If Git is not installed with this option selected, *gh-contributions* will not be able to generate the repository."
+      },
+      {
+        "h3": "Local installation"
+      },
+      {
+        "code": {
+          "language": "js",
+          "content": [
+            "$ git clone git@github.com:IonicaBizau/github-contributions.git",
+            "$ cd github-contributions",
+            "$ npm i",
+            "$ npm start"
+          ]
+        }
+      },
+      {
+        "h2": "Usage"
+      },
+      {
+        "p": [
+          "The server runs on the `9000` port. Open `http://localhost:9000/` in your browser.",
+          "Check the help information on the app page (`http://localhost:9000`), after you start the app."
+        ]
+      }
+    ]
   }
 }
