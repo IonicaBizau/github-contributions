@@ -1,6 +1,7 @@
 [![gh-contributions](http://i.imgur.com/w6nVEgj.png)](#)
 
 # gh-contributions [![Support this project][donate-now]][paypal-donations]
+
 A tool that generates a repository which being pushed into your GitHub account creates a nice contributions calendar.
 
 ## Installation
