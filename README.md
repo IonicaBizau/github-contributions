@@ -1,8 +1,8 @@
 [![gh-contributions](http://i.imgur.com/w6nVEgj.png)](#)
 
-# gh-contributions [![Support this project][donate-now]][paypal-donations]
+# gh-contributions [![PayPal](https://img.shields.io/badge/%24-paypal-f39c12.svg)][paypal-donations] [![Version](https://img.shields.io/npm/v/gh-contributions.svg)](https://www.npmjs.com/package/gh-contributions) [![Downloads](https://img.shields.io/npm/dt/gh-contributions.svg)](https://www.npmjs.com/package/gh-contributions) [![Get help on Codementor](https://cdn.codementor.io/badges/get_help_github.svg)](https://www.codementor.io/johnnyb?utm_source=github&utm_medium=button&utm_term=johnnyb&utm_campaign=github)
 
-A tool that generates a repository which being pushed into your GitHub account creates a nice contributions calendar.
+> A tool that generates a repository which being pushed into your GitHub account creates a nice contributions calendar.
 
 ## Installation
 ### Global installation
@@ -38,8 +38,6 @@ $ npm start
 The server runs on the `9000` port. Open `http://localhost:9000/` in your browser.
 
 Check the help information on the app page (`http://localhost:9000`), after you start the app.
-
-## Documentation
 
 ## How to contribute
 Have an idea? Found a bug? See [how to contribute][contributing].
