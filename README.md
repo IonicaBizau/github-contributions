@@ -39,6 +39,21 @@ The server runs on the `9000` port. Open `http://localhost:9000/` in your browse
 
 Check the help information on the app page (`http://localhost:9000`), after you start the app.
 
+### Running Server Inside Docker Container
+
+Build Docker container locally:
+
+```
+docker build -t github-contributions .
+```
+
+Start Docker container:
+```
+docker run --rm -it -p 127.0.0.1:9000:9000 --name=github-contributions-server github-contributions
+```
+
+Open `http://localhost:9000/` in your browser.
+
 ## How to contribute
 Have an idea? Found a bug? See [how to contribute][contributing].
 
