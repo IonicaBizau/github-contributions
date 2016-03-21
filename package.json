@@ -14,7 +14,7 @@
   ],
   "bin": "./lib/server.js",
   "scripts": {
-    "start": "./lib/server.js"
+    "start": "node ./lib/server.js"
   },
   "author": "Ionică Bizău <bizauionica@gmail.com> (http://ionicabizau.net)",
   "contributors": [
