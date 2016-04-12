@@ -109,14 +109,14 @@
       { "p": "Build Docker container locally:" },
       {
           "code": {
-              "language": "js",
+              "language": "sh",
               "content": "docker build -t github-contributions ."
           }
       },
       { "p": "Start Docker container:" },
       {
           "code": {
-              "language": "js",
+              "language": "sh",
               "content": "docker run --rm -it -p 127.0.0.1:9000:9000 --name=github-contributions-server github-contributions"
           }
       },

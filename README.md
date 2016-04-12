@@ -45,13 +45,13 @@ Check the help information on the app page (`http://localhost:9000`), after you 
 
 Build Docker container locally:
 
-```js
+```sh
 docker build -t github-contributions .
 ```
 
 Start Docker container:
 
-```js
+```sh
 docker run --rm -it -p 127.0.0.1:9000:9000 --name=github-contributions-server github-contributions
 ```
 
