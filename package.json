@@ -34,7 +34,6 @@
   "homepage": "https://github.com/IonicaBizau/github-contributions",
   "devDependencies": {},
   "dependencies": {
-    "archiver": "^0.14.2",
     "gry": "^4.0.0",
     "lien": "0.0.11",
     "socket.io": "^1.1.0",
