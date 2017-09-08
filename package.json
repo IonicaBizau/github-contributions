@@ -1,6 +1,6 @@
 {
   "name": "gh-contributions",
-  "version": "3.0.6",
+  "version": "3.0.7",
   "description": "A tool that generates a repository which being pushed into your GitHub account creates a nice contributions calendar.",
   "main": "lib/server.js",
   "repository": {
@@ -143,6 +143,9 @@
     "resources/",
     "menu/",
     "cli.js",
-    "index.js"
+    "index.js",
+    "bloggify.js",
+    "bloggify.json",
+    "bloggify/"
   ]
 }
