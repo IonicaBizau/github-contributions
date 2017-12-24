@@ -10,7 +10,9 @@
 > A tool that generates a repository which being pushed into your GitHub account creates a nice contributions calendar.
 
 ## Installation
+
 ### Global installation
+
 
 [Ensure you configured NPM and NodeJS not to require `sudo` when installing packages globally](https://github.com/IonicaBizau/dotfiles#npm-config).
 
@@ -18,12 +20,15 @@
 $ npm i -g gh-contributions
 ```
 
+
 To start the GitHub contributions server, do:
 
 ```js
 $ gh-contributions
 ```
+
 ### Notes for installing on Windows
+
 
 For this application to work well on Windows, Git must be installed with the option to put it in `PATH` enabled, like in this screenshot:
 
@@ -33,19 +38,23 @@ For this application to work well on Windows, Git must be installed with the opt
 If Git is not installed with this option selected, *gh-contributions* will not be able to generate the repository.
 
 ### Local installation
+
 ```js
 $ git clone git@github.com:IonicaBizau/github-contributions.git
 $ cd github-contributions
 $ npm i
 $ npm start
 ```
+
 ## Usage
+
 
 The server runs on the `9000` port. Open `http://localhost:9000/` in your browser.
 
 Check the help information on the app page (`http://localhost:9000`), after you start the app.
 
 ### Running Server Inside Docker Container
+
 
 **You will need to use a version lower than `3.0.0` to run this in Docker. Currently this is not supported anymore.**
 
@@ -56,11 +65,13 @@ Build Docker container locally:
 docker build -t github-contributions .
 ```
 
+
 Start Docker container:
 
 ```sh
 docker run --rm -it -p 127.0.0.1:9000:9000 --name=github-contributions-server github-contributions
 ```
+
 
 Open `http://localhost:9000/` in your browser.
 
