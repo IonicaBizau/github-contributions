@@ -34,7 +34,7 @@ requested. :sparkles:
    ```json
    {
       "contributors": [
-         "Your Name <and@email.address> (http://your.website)"
+         "Ajriel <ajrielrisqymaulana@gmail.com> git.com"
       ]
    }
    ```
