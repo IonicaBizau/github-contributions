@@ -1,66 +1,36 @@
-# :eight_spoked_asterisk: :stars: :sparkles: :dizzy: :star2: :star2: :sparkles: :dizzy: :star2: :star2: Contributing :star: :star2: :dizzy: :sparkles:  :star: :star2: :dizzy: :sparkles: :stars: :eight_spoked_asterisk:
+# 🌟 Contributing
 
-So, you want to contribute to this project! That's awesome. However, before
-doing so, please read the following simple steps how to contribute. This will
-make the life easier and will avoid wasting time on things which are not
-requested. :sparkles:
+Want to contribute to this project? Great! Please read these quick steps to streamline the process and avoid unnecessary tasks. ✨
 
-## Discuss the changes before doing them
- - First of all, open an issue in the repository, using the [bug tracker][1],
-   describing the contribution you would like to make, the bug you found or any
-   other ideas you have. This will help us to get you started on the right
-   foot.
+## 💬 Discuss Changes
+Start by opening an issue in the repository using the [bug tracker][1]. Describe your proposed contribution or the bug you've found. If relevant, include platform info and screenshots. 🖼️
 
- - If it makes sense, add the platform and software information (e.g. operating
-   system, Node.JS version etc.), screenshots (so we can see what you are
-   seeing).
+Wait for feedback before proceeding unless the fix is straightforward, like a typo. 📝
 
- - It is recommended to wait for feedback before continuing to next steps.
-   However, if the issue is clear (e.g. a typo) and the fix is simple, you can
-   continue and fix it.
+## 🔧 Fixing Issues
 
-## Fixing issues
- - Fork the project in your account and create a branch with your fix:
-   `some-great-feature` or `some-issue-fix`.
+Fork the project and create a branch for your fix, naming it `some-great-feature` or `some-issue-fix`. Commit changes while following the [code style][2]. If the project has tests, add one. ✅
 
- - Commit your changes in that branch, writing the code following the
-   [code style][2]. If the project contains tests (generally, the `test`
-   directory), you are encouraged to add a test as well. :memo:
+If a `package.json` or `bower.json` exists, add yourself to the `contributors` array; create it if it doesn't. 🙌
 
- - If the project contains a `package.json` or a `bower.json` file add yourself
-   in the `contributors` array (or `authors` in the case of `bower.json`;
-   if the array does not exist, create it):
+```json
+{
+   "contributors": [
+      "Your Name <your@email.address> (http://your.website)"
+   ]
+}
+```
 
-   ```json
-   {
-      "contributors": [
-         "Your Name <and@email.address> (http://your.website)"
-      ]
-   }
-   ```
+## 📬 Creating a Pull Request
+Open a pull request and reference the initial issue (e.g., *fixes #<your-issue-number>*). Provide a clear title and consider adding visual aids for clarity. 📊
 
-## Creating a pull request
+## ⏳ Wait for Feedback
+Your contributions will be reviewed. If feedback is given, update your branch as needed, and the pull request will auto-update. 🔄
 
- - Open a pull request, and reference the initial issue in the pull request
-   message (e.g. *fixes #<your-issue-number>*). Write a good description and
-   title, so everybody will know what is fixed/improved.
+## 🎉 Everyone Is Happy!
+Your contributions will be merged, and everyone will appreciate your effort! 😄❤️
 
- - If it makes sense, add screenshots, gifs etc., so it is easier to see what
-   is going on.
+Thanks! 🤩
 
-## Wait for feedback
-Before accepting your contributions, we will review them. You may get feedback
-about what should be fixed in your modified code. If so, just keep committing
-in your branch and the pull request will be updated automatically.
-
-## Everyone is happy!
-Finally, your contributions will be merged, and everyone will be happy! :smile:
-Contributions are more than welcome!
-
-Thanks! :sweat_smile:
-
-
-
-[1]: https://github.com/IonicaBizau/github-contributions/issues
-
+[1]: /issues
 [2]: https://github.com/IonicaBizau/code-style
